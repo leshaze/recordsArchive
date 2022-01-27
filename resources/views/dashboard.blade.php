@@ -14,7 +14,12 @@
                         </div>
                     @endif
 
-                    <p class="font-weight-normal">                      
+                    <p class="font-weight-normal">
+                        @guest
+                        Willkommen im recordsArchive. <br> 
+                        Für weiteren Inhalt registrieren oder einloggen.
+                        @endguest
+                        
                         @auth
                         @if($count)
                             Aktuelle Einträge: <b>{{ $count }}</b><br>
