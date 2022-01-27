@@ -35,7 +35,7 @@ class CreateRecordsTable extends Migration
             $table->boolean('sold')->default(FALSE);
             $table->string('sold_to')->nullable();
             $table->string('sold_date')->nullable();
-            $table->string('sold_for')->nullable();
+            $table->string('sold_price')->nullable();
             $table->boolean('lost')->default(FALSE);
             $table->text('note')->nullable();
         });

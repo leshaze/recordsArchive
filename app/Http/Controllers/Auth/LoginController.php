@@ -22,7 +22,8 @@ class LoginController extends Controller
         if (!auth()->attempt($request->only('username','password'))){
             return back()->with('status', 'Invalid credentials');
         };
-
+        // Set session status successful login
+        // session(['status' => 'Login Successful']);
         return redirect()->route('dashboard');
 
     }

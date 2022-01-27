@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title',' - Login')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -13,7 +13,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form action="{{ route('login') }}" method="post">
+                        <form action="{{ route('login.index') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="username" class="d-none">Username</label>

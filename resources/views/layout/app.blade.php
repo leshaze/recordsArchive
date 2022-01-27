@@ -8,17 +8,18 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} @yield('title') </title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -36,48 +37,48 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                        @auth
+                    @auth
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                {{-- <a class="nav-link" href="{{ route('record.create') }}">Add record</a> --}}
-                                <a class="nav-link" href="#">Add record</a>
+                                <a class="nav-link" href="{{ route('records.create') }}">Add record</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Records</a>
                                 <div class="dropdown-menu">
-                                    <a href="{{ route('records')}}" class="dropdown-item">All Records</a>
+                                    <a href="{{ route('records.index') }}" class="dropdown-item">All Records</a>
                                     <a href="#" class="dropdown-item">Trash</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Artists</a>
                                 <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">All Artists</a>
+                                    <a href="{{ route('artists.index') }}" class="dropdown-item">All Artists</a>
                                     <a href="#" class="dropdown-item">Add new Artist</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Labels</a>
                                 <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">All Label</a>
+                                    <a href="{{ route('labels.index') }}" class="dropdown-item">All Label</a>
                                     <a href="#" class="dropdown-item">Add new Label</a>
                                 </div>
                             </li>
                         </ul>
-                        @endauth                    
+                    @endauth
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                         @guest 
-                            @if (Route::has('login'))
+                        @guest
+                            @if (Route::has('login.index'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login.index') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
-                            @if (Route::has('register'))
+                            @if (Route::has('register.index'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link"
+                                        href="{{ route('register.index') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @endguest
@@ -85,29 +86,32 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} 
+                                    {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    <form id="logout-form" action="{{ route('logout.index') }}" method="POST"
                                         class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
-                        @endauth 
+                        @endauth
                     </ul>
                 </div>
             </div>
         </nav>
 
         <main class="py-4 my-5">
-            @yield('content')
+                @if (\Session::has('info')) <div class="alert alert-success"> {!! \Session::get('info') !!} </div> @endif
+                @if (\Session::has('warning')) <div class="alert alert-warning"> {!! \Session::get('warning') !!} </div> @endif
+                @yield('content')
+
         </main>
     </div>
     <!-- Footer -->
@@ -120,125 +124,143 @@
     </footer>
 
     <script type="text/javascript">
+        // window.onload = function() {
+        //     if (window.$) {
+        //         // jQuery is loaded  
+        //         console.log("jQuery has loaded!");
+        //     } else {
+        //         // jQuery is not loaded
+        //         console.log("jQuery has not loaded!");
+        //     }
+        // }
         // A $( document ).ready() block.
         $(document).ready(function() {
-
-            $('#search').autocomplete({
-                source: function(request, response) {
-                    $.getJSON('/record/api/search?term=' + request.term, function(data) {
-                        var array = $.map(data, function(row) {
-                            return {
-                                label: row.name,
-                                artist_id: row.id
-                            }
-                        })
-                        response($.ui.autocomplete.filter(array, request.term));
-                    })
-                },
-                minLength: 1,
-                delay: 200,
-                select: function(event, ui) {
-                    window.location.href = '/record/search?term=' + ui.item.label;
-                }
+            $('#sold').click(function() {
+                console.log('clicked');
+                $('#sold_to').toggle();
+                $('#sold_price').toggle();
+                $('#sold_date').toggle();
+                $('#sold_to_label').toggle();
+                $('#sold_price_label').toggle();
+                $('#sold_date_label').toggle();
             });
 
-            $('#artist_name').autocomplete({
-                source: function(request, response) {
-                    $.getJSON('/record/api/artist?term=' + request.term, function(data) {
-                        var array = $.map(data, function(row) {
-                            return {
-                                label: row.name,
-                                artist_id: row.id
-                            }
-                        })
-                        response($.ui.autocomplete.filter(array, request.term));
-                    })
-                },
-                minLength: 1,
-                delay: 200,
-                select: function(event, ui) {
-                    $('#artist_id').val(ui.item.artist_id)
-                },
-                change: function(event, ui) {
-                    if (ui.item == null) {
-                        $('#artist_id').val("")
-                    }
-                }
-            });
+            // $('#search').autocomplete({
+            //     source: function(request, response) {
+            //         $.getJSON('/record/api/search?term=' + request.term, function(data) {
+            //             var array = $.map(data, function(row) {
+            //                 return {
+            //                     label: row.name,
+            //                     artist_id: row.id
+            //                 }
+            //             })
+            //             response($.ui.autocomplete.filter(array, request.term));
+            //         })
+            //     },
+            //     minLength: 1,
+            //     delay: 200,
+            //     select: function(event, ui) {
+            //         window.location.href = '/record/search?term=' + ui.item.label;
+            //     }
+            // });
 
-            $('#label_name').autocomplete({
-                source: function(request, response) {
-                    $.getJSON('/record/api/label?term=' + request.term, function(data) {
-                        var array = $.map(data, function(row) {
-                            return {
-                                label: row.name,
-                                label_id: row.id
-                            }
-                        })
-                        response($.ui.autocomplete.filter(array, request.term));
-                    })
-                },
-                minLength: 1,
-                delay: 200,
-                select: function(event, ui) {
-                    $('#label_id').val(ui.item.label_id)
-                },
-                change: function(event, ui) {
-                    if (ui.item == null) {
-                        $('#label_id').val("")
-                    }
-                }
-            });
+            // $('#artist_name').autocomplete({
+            //     source: function(request, response) {
+            //         $.getJSON('/record/api/artist?term=' + request.term, function(data) {
+            //             var array = $.map(data, function(row) {
+            //                 return {
+            //                     label: row.name,
+            //                     artist_id: row.id
+            //                 }
+            //             })
+            //             response($.ui.autocomplete.filter(array, request.term));
+            //         })
+            //     },
+            //     minLength: 1,
+            //     delay: 200,
+            //     select: function(event, ui) {
+            //         $('#artist_id').val(ui.item.artist_id)
+            //     },
+            //     change: function(event, ui) {
+            //         if (ui.item == null) {
+            //             $('#artist_id').val("")
+            //         }
+            //     }
+            // });
 
-            $('#title').autocomplete({
-                source: function(request, response) {
-                    $.getJSON('/record/api/title?term=' + request.term + '_' + document.getElementById(
-                        'artist_id').value, function(data) {
-                        var array = $.map(data, function(row) {
-                            return {
-                                label: row.title + ' - Archiv.Nr.:' + row
-                                    .archive_number,
-                                value: row.title
-                            }
-                        })
-                        response($.ui.autocomplete.filter(array, request.term));
-                    })
-                },
-                minLength: 1,
-                delay: 200,
-                select: function(event, ui) {
-                    $('#title').val(ui.item.name)
-                },
-                change: function(event, ui) {
-                    if (ui.item == null) {
+            // $('#label_name').autocomplete({
+            //     source: function(request, response) {
+            //         $.getJSON('/record/api/label?term=' + request.term, function(data) {
+            //             var array = $.map(data, function(row) {
+            //                 return {
+            //                     label: row.name,
+            //                     label_id: row.id
+            //                 }
+            //             })
+            //             response($.ui.autocomplete.filter(array, request.term));
+            //         })
+            //     },
+            //     minLength: 1,
+            //     delay: 200,
+            //     select: function(event, ui) {
+            //         $('#label_id').val(ui.item.label_id)
+            //     },
+            //     change: function(event, ui) {
+            //         if (ui.item == null) {
+            //             $('#label_id').val("")
+            //         }
+            //     }
+            // });
 
-                    }
-                }
-            });
+            // $('#title').autocomplete({
+            //     source: function(request, response) {
+            //         $.getJSON('/record/api/title?term=' + request.term + '_' + document.getElementById(
+            //             'artist_id').value, function(data) {
+            //             var array = $.map(data, function(row) {
+            //                 return {
+            //                     label: row.title + ' - Archiv.Nr.:' + row
+            //                         .archive_number,
+            //                     value: row.title
+            //                 }
+            //             })
+            //             response($.ui.autocomplete.filter(array, request.term));
+            //         })
+            //     },
+            //     minLength: 1,
+            //     delay: 200,
+            //     select: function(event, ui) {
+            //         $('#title').val(ui.item.name)
+            //     },
+            //     change: function(event, ui) {
+            //         if (ui.item == null) {
 
-            $('#country_name').autocomplete({
-                source: function(request, response) {
-                    $.getJSON('/record/api/country?term=' + request.term, function(data) {
-                        var array = $.map(data, function(row) {
-                            return {
-                                label: row.name,
-                                artist_id: row.id
-                            }
-                        })
-                        response($.ui.autocomplete.filter(array, request.term));
-                    })
-                },
-                minLength: 1,
-                delay: 200,
-                select: function(event, ui) {
-                    $('#country_id').val(ui.item.artist_id)
-                },
-                change: function(event, ui) {
-                    if (ui.item == null) {
-                        $('#country_id').val("")
-                    }
-                }
-            });
+            //         }
+            //     }
+            // });
+
+            // $('#country_name').autocomplete({
+            //     source: function(request, response) {
+            //         $.getJSON('/record/api/country?term=' + request.term, function(data) {
+            //             var array = $.map(data, function(row) {
+            //                 return {
+            //                     label: row.name,
+            //                     artist_id: row.id
+            //                 }
+            //             })
+            //             response($.ui.autocomplete.filter(array, request.term));
+            //         })
+            //     },
+            //     minLength: 1,
+            //     delay: 200,
+            //     select: function(event, ui) {
+            //         $('#country_id').val(ui.item.artist_id)
+            //     },
+            //     change: function(event, ui) {
+            //         if (ui.item == null) {
+            //             $('#country_id').val("")
+            //         }
+            //     }
+            // });
 
         });
     </script>
