@@ -8,6 +8,11 @@ use App\Models\Artist;
 
 class ArtistController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
     /**
      * Display a listing of the resource.
      *

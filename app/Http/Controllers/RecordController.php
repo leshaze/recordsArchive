@@ -13,6 +13,10 @@ use function Psy\debug;
 
 class RecordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -195,7 +199,7 @@ class RecordController extends Controller
      */
     public function update(UpdateRecordRequest $request, Record $record)
     {
-        // FIXME Wieso klappt validate hier nicht?
+        // FIXME Check validate.
         $this->validate($request, [
             'artist_name' => 'required',
             'title' => 'required',
