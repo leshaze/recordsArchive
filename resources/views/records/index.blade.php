@@ -59,9 +59,9 @@
                 </table>
             @else
                 There is no data yet.
-                @endif
-                {!! $records->links() !!}
+            @endif  
             </div>
+            {{ $records->links() }}  
         </div>
     </div>
 
