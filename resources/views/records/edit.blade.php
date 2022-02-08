@@ -1,7 +1,7 @@
 @extends('layout.app')
 @auth
-    
-@section('title', ' - Edit Record')
+
+    @section('title', ' - Edit Record')
 @section('content')
     <div class="container">
         <div class="wrapper flex" id="recordCreate">
@@ -44,7 +44,7 @@
 
                     </p>
                     <p>
-                        <label for="title">Titel</label> 
+                        <label for="title">Titel</label>
                         @error('title')
                             <span class="text-danger">
                                 {{ $message }}
@@ -56,7 +56,7 @@
                         <input type="hidden">
                     </p>
                     <p>
-                        <label for="label_name">Label</label> 
+                        <label for="label_name">Label</label>
                         @error('label_name')
                             <span class="text-danger">
                                 {{ $message }}
@@ -177,7 +177,6 @@
                         <textarea class="form-control" name="note" id="note" placeholder="Beschreibung" autofocus=""
                             rows="3">{{ $record->note }}</textarea>
                     </p>
-
                     <button style="min-width:70px; max-width:90px" type="submit" class="btn btn-success">Submit</button>
                 </form>
             </div>
