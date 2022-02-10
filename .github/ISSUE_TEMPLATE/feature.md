@@ -1,8 +1,9 @@
 ---
 name: ToDo item
+about: tracking ToDo items
 title: ''
-labels: '"ToDo"'
-assignees: 'leshaze'
+labels: ''
+assignees: leshaze
 
 ---
 
@@ -12,5 +13,3 @@ assignees: 'leshaze'
 **Issues for this item**
 - [ ] Create a new project
 - [ ] Give your project a name
-
-
