@@ -8,6 +8,6 @@ assignees: leshaze
 **Description**
 
 
-**What should be done**
+**ToDo**
 - [ ] Create a new project
 - [ ] Give your project a name
