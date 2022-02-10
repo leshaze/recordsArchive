@@ -2,7 +2,7 @@
 name: ToDo item
 about: tracking ToDo items
 title: ''
-labels: ''
+labels: 'ToDo'
 assignees: leshaze
 
 ---
