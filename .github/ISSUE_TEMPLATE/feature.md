@@ -2,6 +2,7 @@
 name: ToDo item
 about: tracking ToDo items
 title: ''
+author: leshaze
 labels: 'ToDo'
 assignees: leshaze
 
