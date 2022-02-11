@@ -1,15 +1,13 @@
 ---
-name: ToDo item
-about: tracking ToDo items
-title: ''
-labels: 'ToDo'
+name: Tracking issue
+about: Use this template for tracking new features.
+title: "[FEATURE NAME]"
+labels: ToDo
 assignees: leshaze
-
 ---
+**Description**
 
-**What is the item about**
 
-
-**Issues for this item**
+**ToDo**
 - [ ] Create a new project
 - [ ] Give your project a name
