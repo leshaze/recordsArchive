@@ -1,7 +1,5 @@
 @extends('layout.app')
-@auth
-
-    @section('title', ' - Edit Record')
+@section('title', ' - Edit Record')
 @section('content')
     <div class="container">
         <div class="wrapper flex" id="recordCreate">
@@ -183,4 +181,3 @@
         </div>
     </div>
 @endsection
-@endauth

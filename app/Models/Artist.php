@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Artist extends Model
 {
     use HasFactory;
+    
+    public function records()
+    {
+        return $this->hasMany('App\Models\Records');
+    }
 }

@@ -1,5 +1,4 @@
 @extends('layout.app')
-@auth
 @section('title', ' - Create Record')
 @section('content')
     <div class="container">
@@ -151,4 +150,3 @@
         </div>
     </div>
 @endsection
-@endauth

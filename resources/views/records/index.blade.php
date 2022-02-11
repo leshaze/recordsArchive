@@ -1,5 +1,5 @@
 @extends('layout.app')
-@auth
+@section('title','- Records')
 @section('content')
     <div class="container">
         <div class="wrapper">
@@ -64,6 +64,4 @@
             {{ $records->links() }}  
         </div>
     </div>
-
 @endsection
-@endauth

@@ -53,7 +53,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Artists</a>
                                 <div class="dropdown-menu">
                                     <a href="{{ route('artists.index') }}" class="dropdown-item">All Artists</a>
-                                    <a href="#" class="dropdown-item">Add new Artist</a>
+                                    <a href="{{ route('artists.create') }}" class="dropdown-item">Add new Artist</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -91,7 +91,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
+                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -106,11 +106,11 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4 my-5">
-                @if (\Session::has('info')) <div class="alert alert-success"> {!! \Session::get('info') !!} </div> @endif
-                @if (\Session::has('warning')) <div class="alert alert-warning"> {!! \Session::get('warning') !!} </div> @endif
-                @yield('content')
+            @if (\Session::has('info')) <div class="alert alert-success"> {!! \Session::get('info') !!} </div> @endif
+            @if (\Session::has('warning')) <div class="alert alert-warning"> {!! \Session::get('warning') !!} </div> @endif
+            @if (\Session::has('error')) <div class="alert alert-danger"> {!! \Session::get('error') !!} </div> @endif
+            @yield('content')
 
         </main>
     </div>
