@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','- Records')
+@section('title', '- Records')
 @section('content')
     <div class="container">
         <div class="wrapper">
@@ -33,7 +33,8 @@
                         <td>{{ $record->kind }}</td>
                         <td><a href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">
                                 {{ $record->artist->name }} </a></td>
-                        <td><a href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a></td>
+                        <td><a href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a>
+                        </td>
                         <td>
                             @if ($record->label_id)
                                 <a
@@ -51,17 +52,21 @@
                         <td>@if ($record->country_id){{ $record->country->name }} @endif</td>
                         <td><a href="{{ route('records.edit', ['record' => $record->id]) }}" class="btn btn-sm"><i
                                     class="bi bi-pencil-square"></i></a></td>
-                        <td><a href="{{ route('records.destroy', ['record' => $record->id]) }}" class="btn btn-sm"
-                                onclick="return confirm('Delete {{ $record->artist->name }} - {{ $record->title }}?')"><i
-                                    class="bi bi-trash"></i></a></td>
+                        <td>
+                            <form action="{{ route('records.destroy', ['record' => $record->id]) }}" method="post">
+                                @method('DELETE')
+                                <button class="btn btn-link" onclick="return confirm('Delete {{ $record->artist->name }} - {{ $record->title }}?')"><i
+                                    class="bi bi-trash"></i> </button>
+                            </form>
+                        </td>
                         </tr>
                 @endforeach
                 </table>
             @else
                 There is no data yet.
-            @endif  
+                @endif
             </div>
-            {{ $records->links() }}  
+            {{ $records->links() }}
         </div>
     </div>
 @endsection

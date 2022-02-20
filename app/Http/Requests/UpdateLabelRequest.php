@@ -13,7 +13,12 @@ class UpdateLabelRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if(auth()) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**

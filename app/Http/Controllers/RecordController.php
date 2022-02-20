@@ -285,6 +285,7 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         //Retrieve the employee
+        dd($record);
         $record = Record::find($record->getOriginal('id'));
         //delete
         $record->delete();

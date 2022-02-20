@@ -1,22 +1,33 @@
 @extends('layout.app')
-@section('title','Create Label')
+@section('title', '- Create Label')
 @section('content')
-<br><h2 class="offset-sm-1">Create Label</h2>
-<div class="row mt-2">
-  <div class="col-sm-4 offset-sm-1">
-      <form action="{{route('label.store')}}" method = "post">
-        @csrf
-        <div class="form-label-group">
-          <input type="text" name="name" id="name"  class="form-control" placeholder="" autofocus="" value="">
-          <label for="archive_number">Label</label>
+    <div class="container">
+        <div class="wrapper flex" id="labelCreate">
+            <div class="card" id="labelCreate">
+                <div class="card-header">{{ __('Create Label') }}</div>
+                <form action="{{ route('labels.store') }}" method="post" class="Label">
+                    @csrf
+                    <p>
+                        <label for="title">Label</label>
+                        @error('name')
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <input type="text" name="name" id="name"
+                            class="form-control  @error('name') border border-danger @enderror" placeholder="Label"
+                            autofocus="" value="{{ old('name') }}">
+                    </p>
+                    <p></p>
+                    <p></p>
+                    <p class="full-width">
+                        <textarea class="form-control" name="description" id="description" placeholder="Beschreibung"
+                            autofocus="" rows="3">{{ old('note') }}</textarea>
+                    </p>
+
+                    <button style="min-width:70px; max-width:90px" type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
         </div>
-        <div class="col-sm-4form-row">
-          <div class="form-label-group">
-            <textarea class="form-control" name="description" id="description" placeholder="Beschreibung" autofocus="" rows="4"></textarea>
-          </div>
-        </div>
-        <button type = "submit" class = "btn btn-success">Submit</button>
-      </form>
     </div>
-  </div>
 @endsection

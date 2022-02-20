@@ -60,7 +60,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Labels</a>
                                 <div class="dropdown-menu">
                                     <a href="{{ route('labels.index') }}" class="dropdown-item">All Label</a>
-                                    <a href="#" class="dropdown-item">Add new Label</a>
+                                    <a href="{{ route('labels.create') }}" class="dropdown-item">Add new Label</a>
                                 </div>
                             </li>
                         </ul>
