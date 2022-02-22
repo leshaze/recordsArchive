@@ -46,19 +46,10 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Records</a>
                                 <div class="dropdown-menu">
                                     <a href="{{ route('records.index') }}" class="dropdown-item">All Records</a>
-                                    <a href="#" class="dropdown-item">Trash</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Artists</a>
-                                <div class="dropdown-menu">
+                                    <div class="dropdown-divider"></div>
                                     <a href="{{ route('artists.index') }}" class="dropdown-item">All Artists</a>
                                     <a href="{{ route('artists.create') }}" class="dropdown-item">Add new Artist</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Labels</a>
-                                <div class="dropdown-menu">
+                                    <div class="dropdown-divider"></div>
                                     <a href="{{ route('labels.index') }}" class="dropdown-item">All Label</a>
                                     <a href="{{ route('labels.create') }}" class="dropdown-item">Add new Label</a>
                                 </div>

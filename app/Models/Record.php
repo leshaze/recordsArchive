@@ -11,18 +11,22 @@ class Record extends Model
 
     public function artist()
     {
-        return $this->belongsTo('App\Models\Artist');
+        return $this->belongsTo(Artist::class);
     }
     public function label()
     {
-        return $this->belongsTo('App\Models\Label');
+        return $this->belongsTo(Label::class);
     }
     public function country()
     {
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo(Country::class);
     }
     public function images()
     {
-        return $this->hasMany('App\Models\Image');
+        return $this->hasMany(Image::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

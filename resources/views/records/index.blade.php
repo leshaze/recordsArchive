@@ -11,6 +11,7 @@
                             <th>Kind</th>
                             <th>Künstler</th>
                             <th>Title</th>
+                            <th>User</th>
                             <th>Label</th>
                             <th>Cover</th>
                             <th>Media</th>
@@ -35,6 +36,7 @@
                                 {{ $record->artist->name }} </a></td>
                         <td><a href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a>
                         </td>
+                        <td>@if ($record->user->name){{ $record->user->name }} @endif</td>
                         <td>
                             @if ($record->label_id)
                                 <a
@@ -46,7 +48,7 @@
                         <td>@if ($record->catalog_number){{ $record->catalog_number }} @endif</td>
                         <td>@if ($record->matrix_number){{ $record->matrix_number }} @endif</td>
                         <td>@if ($record->archive_number){{ $record->archive_number }} @endif</td>
-                        <td @if ($record->barcode){{ $record->barcode }} @endif</td>
+                        <td>@if ($record->barcode){{ $record->barcode }} @endif</td>
                         <td>@if ($record->current_price){{ $record->current_price }} € @endif</td>
                         <td>@if ($record->release_date){{ $record->release_date }} @endif</td>
                         <td>@if ($record->country_id){{ $record->country->name }} @endif</td>

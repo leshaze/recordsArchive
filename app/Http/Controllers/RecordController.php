@@ -6,10 +6,11 @@ use App\Models\Label;
 use App\Models\Artist;
 use App\Models\Record;
 use App\Models\Country;
+use function Psy\debug;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
-
-use function Psy\debug;
 
 class RecordController extends Controller
 {
@@ -25,11 +26,12 @@ class RecordController extends Controller
     public function index()
     {
         //Show all Records from the database and return to view
-        // $records = Record::all();
-        $records = Record::join('artists', 'records.artist_id', '=', 'artists.id')
-            ->select('records.*')
-            ->orderBy('artists.name', 'ASC')
-            ->paginate(10);
+        // $records = Record::join('artists', 'records.artist_id', '=', 'artists.id')
+        //     ->select('records.*')
+        //     ->orderBy('artists.name', 'ASC')
+        //     ->paginate(10);
+        $records = Record::where('user_id' ,'=', AUTH::user()->id)->paginate(10);
+        //dd($records);
         return view('records.index', ['records' => $records]);
     }
 
@@ -61,9 +63,12 @@ class RecordController extends Controller
         //Persist the record in the database
         //form data is available in the request object
         $record = new Record();
+
+        $record->user_id = Auth::user()->id;
         //input method is used to get the value of input with its
         //name specified
         $record->kind = $request->input('kind');
+
 
         // Check if artist_id is in the current input request
         if (empty($request->input('artist_id'))) {
@@ -71,6 +76,14 @@ class RecordController extends Controller
             $get_artist_id = Artist::where('name', '=', $request->input('artist_name'))->first();
             if (!$get_artist_id) {
                 // If nothing is found in the database create a new artist and pass the new ID.
+                
+                //TODO: Implement new logic for creating if not in DB
+                // // Retrieve flight by name or create it with the name, delayed, and arrival_time attributes...
+                // $flight = Flight::firstOrCreate(
+                // ['name' => 'London to Paris'],
+                // ['delayed' => 1, 'arrival_time' => '11:30']
+                // );
+
                 $artist = new Artist();
                 $artist->name = $request->input('artist_name');
                 $artist->save(); //persist the data
@@ -172,8 +185,8 @@ class RecordController extends Controller
     public function show(Record $record)
     {
         //Return view to create artist
-        $record = Record::find($record->getOriginal('id'));
-        //dd($records);
+        $record = Record::firstWhere($record->getOriginal('id'), AUTH::user()->id);
+        dd($record);
         return view('records.details', ['record' => $record]);
     }
 
@@ -199,7 +212,6 @@ class RecordController extends Controller
      */
     public function update(UpdateRecordRequest $request, Record $record)
     {
-        // FIXME Check validate.
         $this->validate($request, [
             'artist_name' => 'required',
             'title' => 'required',

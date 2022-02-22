@@ -16,14 +16,15 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('user_id');
             $table->string('kind');
             $table->integer('artist_id');
             $table->string('title');
             $table->integer('label_id');
+            $table->integer('country_id')->nullable();
             $table->string('catalog_number')->nullable();
             $table->string('matrix_number')->nullable();
             $table->string('barcode')->nullable();
-            $table->integer('country_id')->nullable();
             $table->string('release_date')->nullable();
             $table->string('reissue_date')->nullable();
             $table->integer('grading_media')->nullable();

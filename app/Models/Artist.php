@@ -11,6 +11,6 @@ class Artist extends Model
     
     public function records()
     {
-        return $this->hasMany('App\Models\Records');
+        return $this->hasMany(Records::class);
     }
 }
