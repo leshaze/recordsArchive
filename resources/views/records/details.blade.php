@@ -3,9 +3,6 @@
 @section('content')
     <div class="container">
         <div class="wrapper">
-            @if (empty($record) && !$record->count())
-                Nothing found
-            @else
                 <div class="card">
                     <div class="card-header">{{ $record->title }} - {{ $record->kind }} </div>
                     <ul>
@@ -16,7 +13,6 @@
                         </li>
                     </ul>
                 </div>
-            @endif
         </div>
     </div>
 @endsection
