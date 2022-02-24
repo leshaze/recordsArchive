@@ -43,32 +43,7 @@ class RecordController extends Controller
         return view('records.search',['term'=>$request->input('term'), 'records'=>$records]); 
     }
 
-    public function getAutocompleteArtist(Request $request){
-        if($request->has('term')){
-            return Artist::where('name','like','%'.$request->input('term').'%')->get();
-        }
-    }
 
-    public function getAutocompleteTitle(Request $request){
-        if($request->has('term')){
-            $terms = explode('_', $request->input('term'));
-            return Record::where('title','like','%'.$terms[0].'%')
-            ->where('artist_id', '=',$terms[1])
-            ->get();
-        }
-    }
-
-    public function getAutocompleteLabel(Request $request){
-        if($request->has('term')){
-            return Label::where('name','like','%'.$request->input('term').'%')->get();
-        }
-    }
-
-    public function getAutocompleteCountry(Request $request){
-        if($request->has('term')){
-            return Country::where('name','like','%'.$request->input('term').'%')->get();
-        }
-    }
 
     /**
      * Store a newly created resource in storage.

@@ -13,6 +13,9 @@ try {
 window.axios = require('axios');
 window.$ = require('jquery');
 
+import 'jquery-ui/themes/base/all.css';
+import 'jquery-ui/ui/widgets/autocomplete.js';
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

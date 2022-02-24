@@ -7,8 +7,9 @@ use App\Models\Artist;
 use App\Models\Record;
 use App\Models\Country;
 use function Psy\debug;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
 
@@ -59,7 +60,6 @@ class RecordController extends Controller
             'label_name' => 'required',
             'country_name' => 'max:4',
         ]);
-
         //Persist the record in the database
         //form data is available in the request object
         $record = new Record();
@@ -244,7 +244,6 @@ class RecordController extends Controller
         $record->sold_price = $request->sold_price ? str_replace(',', '.', $request->sold_price) : $record->sold_price = null;
         $lost = ($request->lost == "on") ? True : False;
         $record->lost = $lost;
-        dd($record);
 
         $record->save(); //persist the data
         return redirect()->route('records.index')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' updated successfully');
@@ -265,4 +264,5 @@ class RecordController extends Controller
         $record->delete();
         return redirect()->route('records')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' deleted successfully');
     }
+
 }

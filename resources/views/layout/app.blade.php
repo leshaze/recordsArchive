@@ -81,8 +81,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#" onclick="event.preventDefault();
-                                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="#"
+                                        onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -98,9 +99,15 @@
             </div>
         </nav>
         <main class="py-4 my-5">
-            @if (\Session::has('info')) <div class="alert alert-success"> {!! \Session::get('info') !!} </div> @endif
-            @if (\Session::has('warning')) <div class="alert alert-warning"> {!! \Session::get('warning') !!} </div> @endif
-            @if (\Session::has('error')) <div class="alert alert-danger"> {!! \Session::get('error') !!} </div> @endif
+            @if (\Session::has('info'))
+                <div class="alert alert-success"> {!! \Session::get('info') !!} </div>
+            @endif
+            @if (\Session::has('warning'))
+                <div class="alert alert-warning"> {!! \Session::get('warning') !!} </div>
+            @endif
+            @if (\Session::has('error'))
+                <div class="alert alert-danger"> {!! \Session::get('error') !!} </div>
+            @endif
             @yield('content')
 
         </main>
@@ -124,7 +131,7 @@
         //         console.log("jQuery has not loaded!");
         //     }
         // }
-        // A $( document ).ready() block.
+
         $(document).ready(function() {
             $('#sold').click(function() {
                 console.log('clicked');
@@ -155,103 +162,122 @@
             //     }
             // });
 
-            // $('#artist_name').autocomplete({
-            //     source: function(request, response) {
-            //         $.getJSON('/record/api/artist?term=' + request.term, function(data) {
-            //             var array = $.map(data, function(row) {
-            //                 return {
-            //                     label: row.name,
-            //                     artist_id: row.id
-            //                 }
-            //             })
-            //             response($.ui.autocomplete.filter(array, request.term));
-            //         })
-            //     },
-            //     minLength: 1,
-            //     delay: 200,
-            //     select: function(event, ui) {
-            //         $('#artist_id').val(ui.item.artist_id)
-            //     },
-            //     change: function(event, ui) {
-            //         if (ui.item == null) {
-            //             $('#artist_id').val("")
-            //         }
-            //     }
-            // });
+            $('#artist_name').autocomplete({
+                source: function(request, response) {
+                    $.getJSON('{{ route('autocomplete') }}' + '/?search=artist&term=' + request.term,
+                        function(data) {
+                            var array = $.map(data, function(row) {
+                                return {
+                                    label: row.name,
+                                    artist_id: row.id
+                                }
 
-            // $('#label_name').autocomplete({
-            //     source: function(request, response) {
-            //         $.getJSON('/record/api/label?term=' + request.term, function(data) {
-            //             var array = $.map(data, function(row) {
-            //                 return {
-            //                     label: row.name,
-            //                     label_id: row.id
-            //                 }
-            //             })
-            //             response($.ui.autocomplete.filter(array, request.term));
-            //         })
-            //     },
-            //     minLength: 1,
-            //     delay: 200,
-            //     select: function(event, ui) {
-            //         $('#label_id').val(ui.item.label_id)
-            //     },
-            //     change: function(event, ui) {
-            //         if (ui.item == null) {
-            //             $('#label_id').val("")
-            //         }
-            //     }
-            // });
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        });
+                },
+                minLength: 1,
+                delay: 200,
+                select: function(event, ui) {
+                    $('#artist_id').val(ui.item.artist_id);
+                },
+                change: function(event, ui) {
+                    if (ui.item == null) {
+                        $('#artist_id').val("")
+                    }
+                }
+            });
 
-            // $('#title').autocomplete({
-            //     source: function(request, response) {
-            //         $.getJSON('/record/api/title?term=' + request.term + '_' + document.getElementById(
-            //             'artist_id').value, function(data) {
-            //             var array = $.map(data, function(row) {
-            //                 return {
-            //                     label: row.title + ' - Archiv.Nr.:' + row
-            //                         .archive_number,
-            //                     value: row.title
-            //                 }
-            //             })
-            //             response($.ui.autocomplete.filter(array, request.term));
-            //         })
-            //     },
-            //     minLength: 1,
-            //     delay: 200,
-            //     select: function(event, ui) {
-            //         $('#title').val(ui.item.name)
-            //     },
-            //     change: function(event, ui) {
-            //         if (ui.item == null) {
+            $('#label_name').autocomplete({
+                source: function(request, response) {
+                    $.getJSON('{{ route('autocomplete') }}' + '/?search=label&term=' + request.term,
+                        function(data) {
+                            var array = $.map(data, function(row) {
+                                return {
+                                    label: row.name,
+                                    label_id: row.id
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        })
+                },
+                minLength: 1,
+                delay: 200,
+                select: function(event, ui) {
+                    $('#label_id').val(ui.item.label_id)
+                },
+                change: function(event, ui) {
+                    if (ui.item == null) {
+                        $('#label_id').val("")
+                    }
+                }
+            });
 
-            //         }
-            //     }
-            // });
+            $('#title').autocomplete({
+                source: function(request, response) {
+                    $.getJSON('{{ route('autocomplete') }}' + '/?search=title&term=' + request.term +
+                        '_' + document.getElementById(
+                            'artist_id').value,
+                        function(data) {
 
-            // $('#country_name').autocomplete({
-            //     source: function(request, response) {
-            //         $.getJSON('/record/api/country?term=' + request.term, function(data) {
-            //             var array = $.map(data, function(row) {
-            //                 return {
-            //                     label: row.name,
-            //                     artist_id: row.id
-            //                 }
-            //             })
-            //             response($.ui.autocomplete.filter(array, request.term));
-            //         })
-            //     },
-            //     minLength: 1,
-            //     delay: 200,
-            //     select: function(event, ui) {
-            //         $('#country_id').val(ui.item.artist_id)
-            //     },
-            //     change: function(event, ui) {
-            //         if (ui.item == null) {
-            //             $('#country_id').val("")
-            //         }
-            //     }
-            // });
+                            var array = $.map(data, function(row) {
+                                if (row.archive_number) {
+                                    return {
+                                        label: row.title + ' - Archiv.Nr.:' + row
+                                            .archive_number,
+                                        value: row.title
+                                    }
+                                } else {
+                                    return {
+                                        label: row.title,
+                                        value: row.title
+                                    }
+
+                                }
+
+                            })
+
+
+                            response($.ui.autocomplete.filter(array, request.term));
+                        })
+                },
+                minLength: 1,
+                delay: 200,
+                select: function(event, ui) {
+                    $('#title').val(ui.item.name)
+                },
+                change: function(event, ui) {
+                    if (ui.item == null) {
+
+                    }
+                }
+            });
+
+            $('#country_name').autocomplete({
+                source: function(request, response) {
+                    $.getJSON('{{ route('autocomplete') }}' + '/?search=country&term=' + request
+                        .term,
+                        function(data) {
+                            var array = $.map(data, function(row) {
+                                return {
+                                    label: row.name,
+                                    artist_id: row.id
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        })
+                },
+                minLength: 1,
+                delay: 200,
+                select: function(event, ui) {
+                    $('#country_id').val(ui.item.artist_id)
+                },
+                change: function(event, ui) {
+                    if (ui.item == null) {
+                        $('#country_id').val("")
+                    }
+                }
+            });
 
         });
     </script>

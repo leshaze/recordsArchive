@@ -29,7 +29,7 @@
                         </span>
                     @enderror
                     <input type="text" name="artist_name" id="artist_name"
-                        class="form-control  @error('artist_name') border border-danger @enderror" placeholder="Künstler"
+                        class="form-control @error('artist_name') border border-danger @enderror" placeholder="Künstler"
                         autofocus="" value="{{ old('artist_name') }}">
                     <input type="hidden" name="artist_id" id="artist_id" value="{{ old('artist_id') }}">
                     </p>
