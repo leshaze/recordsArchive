@@ -34,7 +34,7 @@ Route::resource('records', RecordController::class);
 Route::resource('login', LoginController::class);
 Route::resource('logout', LogoutController::class);
 Route::resource('labels', LabelController::class);
-Route::resource('register', RegisterController::class);
+//Route::resource('register', RegisterController::class);
 
   
 // Route::get('/record/api/label','RecordController@getAutocompleteLabel'); 

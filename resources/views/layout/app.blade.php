@@ -24,6 +24,7 @@
 
 <body>
     <div id="app">
+
         <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -34,7 +35,6 @@
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
@@ -74,6 +74,9 @@
                             @endif
                         @endguest
                         @auth
+                            {{-- <li>
+                                <input class="form-control" type="text" id="search" placeholder="Search">
+                            </li> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -83,7 +86,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#"
                                         onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
+                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -145,11 +148,12 @@
 
             // $('#search').autocomplete({
             //     source: function(request, response) {
-            //         $.getJSON('/record/api/search?term=' + request.term, function(data) {
+            //         $.getJSON('{{ route('autocomplete') }}' + '/?search=main&term='+ request.term, 
+            //         function(data) {
             //             var array = $.map(data, function(row) {
             //                 return {
             //                     label: row.name,
-            //                     artist_id: row.id
+            //                     record_id: row.id
             //                 }
             //             })
             //             response($.ui.autocomplete.filter(array, request.term));
@@ -158,7 +162,8 @@
             //     minLength: 1,
             //     delay: 200,
             //     select: function(event, ui) {
-            //         window.location.href = '/record/search?term=' + ui.item.label;
+            //         //window.location.href = '{{ route('records.edit', ['record' => 'ui.item.record_id']) }}';
+            //         window.location.href = '/record/search?term='+ui.item.label;
             //     }
             // });
 

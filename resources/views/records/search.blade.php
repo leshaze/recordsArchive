@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.main')
 @section('title','Records Index')
 @section('content')
 <br><h2 class="offset-sm-1">Übersicht</h2>

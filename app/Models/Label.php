@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Label extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'name',
+    ];
 
     public function records()
     {
