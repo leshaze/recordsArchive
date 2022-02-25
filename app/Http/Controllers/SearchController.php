@@ -21,24 +21,35 @@ class SearchController extends Controller
         }
         if ($request->search == 'label') {
             if ($term) {
-                error_log($term);
                 return Label::where('name', 'like', '%' . $request->input('term') . '%')->get();
             }
         }
 
         if ($request->search == 'title') {
             if ($term) {
-                error_log($term);
                 $terms = explode('_', $term);
                 return Record::where('title', 'like', '%' . $terms[0] . '%')
                     ->where('artist_id', '=', $terms[1])
                     ->get();
             }
         }
-        if ($request->search = 'country') {
+
+        if ($request->search == 'country') {
             if ($term) {
                 return Country::where('name', 'like', '%' . $term . '%')->get();
             }
         }
+
+        // if ($request->search == 'main') {
+        //     $term = $request->term;
+        //     if ($term) {
+        //         error_log($term);
+        //         return Artist::where('name', 'like', '%' . $term . '%')
+        //         ->orderBy('release_date', 'ASC')
+        //         ->get();
+                
+        //     }
+        // }
     }
+
 }
