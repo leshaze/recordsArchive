@@ -6,7 +6,15 @@
             <div class="card">
                 <div class="card-header">{{ $label->name }} <a
                         href="{{ route('labels.edit', ['label' => $label->id]) }}" class="btn btn-sm"><i
-                            class="bi bi-pencil-square"></i></a></td>
+                            class="bi bi-pencil-square"></i></a>
+                            <a href="javascript:document.getElementById('delete-label-form').submit();"
+                                class="btn btn-sm"><i class="bi bi-trash"></i></a>
+                            <form id="delete-label-form"
+                                action="{{ route('labels.destroy', ['label' => $label->id]) }}" method="post"
+                                style="display: none;">
+                                @method('DELETE')
+                                {{ csrf_field() }}
+                            </form></td>
                 </div>
                 <div>
                     @foreach ($images as $image)

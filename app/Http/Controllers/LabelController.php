@@ -140,7 +140,6 @@ class LabelController extends Controller
         $label->save();
 
         return redirect()->route('labels.index')->with('info', 'Label ' . $label->name . ' updated successfully');
-
     }
 
     /**
@@ -151,6 +150,23 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        //
+        //Retrieve the employee
+        $label = Label::find($label->id);
+        $result = Record::where('label_id', '=', $label->id)->first();
+        if (!$result) {
+            $images = Image::where('reference', '=', 'label')
+                ->where('reference_id', '=', $label->id)
+                ->get();
+
+            foreach ($images as $image) {
+                unlink(public_path() . '/storage/' . $image->path);
+                $image->delete($image->name);
+            }
+            //delete
+            $label->delete();
+            return redirect()->route('labels.index')->with('info', 'Label ' . $label->name . ' deleted successfully');
+        } else {
+            return redirect()->route('labels.index')->with('error', 'Label ' . $label->name . ' could not be deleted. ');
+        }
     }
 }

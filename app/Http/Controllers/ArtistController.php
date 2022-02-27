@@ -148,7 +148,6 @@ class ArtistController extends Controller
         $artist->save();
 
         return redirect()->route('labels.index')->with('info', 'Artist ' . $artist->name . ' updated successfully');
-
     }
 
     /**
@@ -159,6 +158,23 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        //
+        //Retrieve the employee
+        $artist = Artist::find($artist->id);
+        $result = Record::where('artist_id', '=', $artist->id)->first();
+        if (!$result) {
+            $images = Image::where('reference', '=', 'artist')
+                ->where('reference_id', '=', $artist->id)
+                ->get();
+
+            foreach ($images as $image) {
+                unlink(public_path() . '/storage/' . $image->path);
+                $image->delete($image->name);
+            }
+            //delete
+            $artist->delete();
+            return redirect()->route('artists.index')->with('info', 'Artist ' . $artist->name . ' deleted successfully');
+        } else {
+            return redirect()->route('labels.index')->with('error', 'Artist ' . $artist->name . ' could not be deleted. ');
+        }
     }
 }

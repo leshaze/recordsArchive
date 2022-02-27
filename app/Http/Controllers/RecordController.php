@@ -11,6 +11,7 @@ use function Psy\debug;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
@@ -155,12 +156,12 @@ class RecordController extends Controller
                 $name = $file->getClientOriginalName();
                 $path = $file->store('images', 'public');
 
-                $save = new Image;
-                $save->reference = 'record';
-                $save->reference_id = $record->id;
-                $save->name = $name;
-                $save->path = $path;
-                $save->save();
+                $image = new Image;
+                $image->reference = 'record';
+                $image->reference_id = $record->id;
+                $image->name = $name;
+                $image->path = $path;
+                $image->save();
             };
         }
         return redirect()->route('records.index')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' added successfully');
@@ -294,16 +295,17 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         //Retrieve the employee
-        dd($record);
         $record = Record::find($record->id);
         $images = Image::where('reference', '=', 'record')
             ->where('reference_id', '=', $record->id)
             ->get();
+        
         foreach ($images as $image) {
-            Storage::delete($image->name);
+            unlink(public_path().'/storage/'.$image->path);
+            $image->delete($image->name);
         }
         //delete
         $record->delete();
-        return redirect()->route('records')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' deleted successfully');
+        return redirect()->route('records.index')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' deleted successfully');
     }
 }
