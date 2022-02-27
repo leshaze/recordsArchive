@@ -2,9 +2,9 @@
 @section('title', ' - Edit Record')
 @section('content')
     <div class="container">
-        <div class="wrapper flex" id="recordCreate">
-            <div class="card" id="recordCreate">
-                <div class="card-header">{{ __('Records') }}</div>
+        <div class="wrapper flex" id="recordEdit">
+            <div class="card" id="recordEdit">
+                <div class="card-header">{{ __('Edit Record') }}</div>
                 <form action="{{ route('records.update', ['record' => $record->id]) }}" method="post"
                     class="Record">
                     @method('PUT')
@@ -22,11 +22,30 @@
                         </label>
                     </p>
                     <p>
-                        <input class="form-check-input" type="checkbox" id="sold" name="sold" @if ($record->sold) checked @endif>
+                        <input class="form-check-input" type="checkbox" id="sold" name="sold"
+                            @if ($record->sold) checked @endif>
                         <label for="sold">Verkauft</label><br>
-                        <input class="form-check-input" type="checkbox" id="lost" name="lost" @if ($record->lost) checked @endif>
+                        <input class="form-check-input" type="checkbox" id="lost" name="lost"
+                            @if ($record->lost) checked @endif>
                         <label for="lost">Verloren</label><br>
                     </p>
+                    @if ($images)
+                        <p>
+                        <div>
+                            @foreach ($images as $image)
+                                <img src="{{ URL::asset('storage/' . $image->path) }}" name="{{ $image->name }}" width="100px" height="100px"
+                                    alt="{{ $image->name }}"><a href="#"
+                                    class="btn btn-sm" name="image_delete" id="{{ $image->name }}" ><i
+                                        class="bi bi-trash"></i></a>
+                            @endforeach
+                        </div>
+                        </p>
+                        <p></p>
+                    @endif
+                    <p>
+                        <input type="file" name="file[]" multiple />
+                    </p>
+                    <p></p>
                     <p></p>
                     <p>
                         <label for="title">Künstler</label>
@@ -100,7 +119,8 @@
                         @enderror
                         <input type="text" name="country_name" id="country_name"
                             class="form-control @error('country_name') border border-danger @enderror"
-                            placeholder="Herkunftsland" autofocus="" @if ($record->country_id) value="{{ $record->country->name }}" @endif>
+                            placeholder="Herkunftsland" autofocus=""
+                            @if ($record->country_id) value="{{ $record->country->name }}" @endif>
                         <input type="hidden" name="country_id" id="country_id" value="{{ $record->country_id }}">
                     </p>
                     <p>
@@ -119,27 +139,45 @@
                         <label for="grading_media">Grading</label><br>
                         <select name="grading_media" class="custom-select">
                             <option value="0" @if ($record->grading_media == '') selected @endif>Grading Media</option>
-                            <option value="100" @if ($record->grading_media == '100') selected @endif>100% - GER: M- / US: NM</option>
-                            <option value="85" @if ($record->grading_media == '85') selected @endif>85% - GER: M-- / US: NM</option>
-                            <option value="70" @if ($record->grading_media == '70') selected @endif>70% - GER: VG++ / US: VG+</option>
-                            <option value="50" @if ($record->grading_media == '50') selected @endif>50% - GER: VG+ / US: VG+</option>
-                            <option value="35" @if ($record->grading_media == '35') selected @endif>35% - GER: VG / US: VG</option>
-                            <option value="25" @if ($record->grading_media == '25') selected @endif>25% - GER: VG- / US: VG</option>
-                            <option value="15" @if ($record->grading_media == '15') selected @endif>15% - GER: VG-- / US: VG-</option>
-                            <option value="10" @if ($record->grading_media == '10') selected @endif>10% - GER: G+ / US: VG-</option>
-                            <option value="5" @if ($record->grading_media == '5') selected @endif>5% - GER G / US: G</option>
+                            <option value="100" @if ($record->grading_media == '100') selected @endif>100% - GER: M- / US: NM
+                            </option>
+                            <option value="85" @if ($record->grading_media == '85') selected @endif>85% - GER: M-- / US: NM
+                            </option>
+                            <option value="70" @if ($record->grading_media == '70') selected @endif>70% - GER: VG++ / US: VG+
+                            </option>
+                            <option value="50" @if ($record->grading_media == '50') selected @endif>50% - GER: VG+ / US: VG+
+                            </option>
+                            <option value="35" @if ($record->grading_media == '35') selected @endif>35% - GER: VG / US: VG
+                            </option>
+                            <option value="25" @if ($record->grading_media == '25') selected @endif>25% - GER: VG- / US: VG
+                            </option>
+                            <option value="15" @if ($record->grading_media == '15') selected @endif>15% - GER: VG-- / US: VG-
+                            </option>
+                            <option value="10" @if ($record->grading_media == '10') selected @endif>10% - GER: G+ / US: VG-
+                            </option>
+                            <option value="5" @if ($record->grading_media == '5') selected @endif>5% - GER G / US: G
+                            </option>
                         </select><br>
                         <select name="grading_cover" class="custom-select">
                             <option value="0" @if ($record->grading_cover == '') selected @endif>Grading Cover</option>
-                            <option value="100" @if ($record->grading_cover == '100') selected @endif>100% - GER: M- / US: NM</option>
-                            <option value="85" @if ($record->grading_cover == '85') selected @endif>85% - GER: M-- / US: NM</option>
-                            <option value="70" @if ($record->grading_cover == '70') selected @endif>70% - GER: VG++ / US: VG+</option>
-                            <option value="50" @if ($record->grading_cover == '50') selected @endif>50% - GER: VG+ / US: VG+</option>
-                            <option value="35" @if ($record->grading_cover == '35') selected @endif>35% - GER: VG / US: VG</option>
-                            <option value="25" @if ($record->grading_cover == '25') selected @endif>25% - GER: VG- / US: VG</option>
-                            <option value="15" @if ($record->grading_cover == '15') selected @endif>15% - GER: VG-- / US: VG-</option>
-                            <option value="10" @if ($record->grading_cover == '10') selected @endif>10% - GER: G+ / US: VG-</option>
-                            <option value="5" @if ($record->grading_cover == '5') selected @endif>5% - GER G / US: G</option>
+                            <option value="100" @if ($record->grading_cover == '100') selected @endif>100% - GER: M- / US: NM
+                            </option>
+                            <option value="85" @if ($record->grading_cover == '85') selected @endif>85% - GER: M-- / US: NM
+                            </option>
+                            <option value="70" @if ($record->grading_cover == '70') selected @endif>70% - GER: VG++ / US: VG+
+                            </option>
+                            <option value="50" @if ($record->grading_cover == '50') selected @endif>50% - GER: VG+ / US: VG+
+                            </option>
+                            <option value="35" @if ($record->grading_cover == '35') selected @endif>35% - GER: VG / US: VG
+                            </option>
+                            <option value="25" @if ($record->grading_cover == '25') selected @endif>25% - GER: VG- / US: VG
+                            </option>
+                            <option value="15" @if ($record->grading_cover == '15') selected @endif>15% - GER: VG-- / US: VG-
+                            </option>
+                            <option value="10" @if ($record->grading_cover == '10') selected @endif>10% - GER: G+ / US: VG-
+                            </option>
+                            <option value="5" @if ($record->grading_cover == '5') selected @endif>5% - GER G / US: G
+                            </option>
                         </select>
                     </p>
                     <p>
@@ -155,20 +193,26 @@
                         <input type="hidden">
                     </p>
                     <p>
-                        <label for="sold_date" id="sold_date_label" @if (!$record->sold) style="display: none" @endif>Verkaufsdatum</label>
+                        <label for="sold_date" id="sold_date_label"
+                            @if (!$record->sold) style="display: none" @endif>Verkaufsdatum</label>
                         <input type="text" name="sold_date" id="sold_date" class="form-control"
-                            placeholder="Verkaufsdatum" autofocus="" @if (!$record->sold) style="display: none" @endif
+                            placeholder="Verkaufsdatum" autofocus=""
+                            @if (!$record->sold) style="display: none" @endif
                             value="{{ $record->sold_date }}">
                     </p>
                     <p>
-                        <label for="sold_to" id="sold_to_label" @if (!$record->sold) style="display: none" @endif>Verkauf an</label>
+                        <label for="sold_to" id="sold_to_label"
+                            @if (!$record->sold) style="display: none" @endif>Verkauf an</label>
                         <input type="text" name="sold_to" id="sold_to" class="form-control" placeholder="Verkauf an"
-                            autofocus="" @if (!$record->sold) style="display: none" @endif value="{{ $record->sold_to }}">
+                            autofocus="" @if (!$record->sold) style="display: none" @endif
+                            value="{{ $record->sold_to }}">
                     </p>
                     <p>
-                        <label for="sold_price" id="sold_price_label" @if (!$record->sold) style="display: none" @endif>Verkaufspreis €</label>
+                        <label for="sold_price" id="sold_price_label"
+                            @if (!$record->sold) style="display: none" @endif>Verkaufspreis €</label>
                         <input type="int" name="sold_price" id="sold_price" class="form-control"
-                            placeholder="Verkaufspreis €" autofocus="" @if (!$record->sold) style="display: none" @endif
+                            placeholder="Verkaufspreis €" autofocus=""
+                            @if (!$record->sold) style="display: none" @endif
                             value="{{ $record->sold_price }}">
                     </p>
                     <p class="full-width">

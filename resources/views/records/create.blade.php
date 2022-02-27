@@ -5,16 +5,16 @@
         <div class="wrapper flex" id="recordCreate">
             <div class="card" id="recordCreate">
                 <div class="card-header">{{ __('Records') }}</div>
-                <form action="{{ route('records.store') }}" method="post" class="Record">
+                <form action="{{ route('records.store') }}" method="post" class="Record" enctype="multipart/form-data">
                     @csrf
                     <p>
-                        <input class="form-check-input" type="radio" name="kind" id="Radios1" value="LP" @if (old('kind') != 'CD')
-                        checked @endif >
+                        <input class="form-check-input" type="radio" name="kind" id="Radios1" value="LP"
+                            @if (old('kind') != 'CD') checked @endif>
                         <label class="form-check-label" for="Radios1">
                             LP
                         </label><br>
-                        <input class="form-check-input" type="radio" name="kind" id="Radios2" value="CD" @if (old('kind') == 'CD')
-                            checked @endif>
+                        <input class="form-check-input" type="radio" name="kind" id="Radios2" value="CD"
+                            @if (old('kind') == 'CD') checked @endif>
                         <label class="form-check-label" for="Radios2">
                             CD
                         </label>
@@ -22,35 +22,43 @@
                     <p></p>
                     <p></p>
                     <p>
-                        <label for="title">Künstler</label> 
+                        <input type="file" name="file[]" multiple />
+                    </p>
+                    <p></p>
+                    <p></p>
+                    <p>
+                        <label for="title">Künstler</label>
                         @error('artist_name')
-                        <span class="text-danger">
-                            {{ $message }}
-                        </span>
-                    @enderror
-                    <input type="text" name="artist_name" id="artist_name"
-                        class="form-control @error('artist_name') border border-danger @enderror" placeholder="Künstler"
-                        autofocus="" value="{{ old('artist_name') }}">
-                    <input type="hidden" name="artist_id" id="artist_id" value="{{ old('artist_id') }}">
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <input type="text" name="artist_name" id="artist_name"
+                            class="form-control @error('artist_name') border border-danger @enderror" placeholder="Künstler"
+                            autofocus="" value="{{ old('artist_name') }}">
+                        <input type="hidden" name="artist_id" id="artist_id" value="{{ old('artist_id') }}">
                     </p>
                     <p>
                         <label for="title">Titel</label>
                         @error('title')
-                        <span class="text-danger">
-                            {{ $message }}
-                        </span>
-                    @enderror
-                        <input type="text" name="title" id="title" class="form-control @error('title') border border-danger @enderror" placeholder="Titel" autofocus="" value="{{ old('title') }}">
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <input type="text" name="title" id="title"
+                            class="form-control @error('title') border border-danger @enderror" placeholder="Titel"
+                            autofocus="" value="{{ old('title') }}">
                         <input type="hidden">
                     </p>
                     <p>
                         <label for="label_name">Label</label>
                         @error('label_name')
-                        <span class="text-danger">
-                            {{ $message }}
-                        </span>
-                    @enderror
-                        <input type="text" name="label_name" id="label_name" class="form-control @error('label_name') border border-danger @enderror" placeholder="Label"
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <input type="text" name="label_name" id="label_name"
+                            class="form-control @error('label_name') border border-danger @enderror" placeholder="Label"
                             autofocus="" value="{{ old('label_name') }}">
                         <input type="hidden" name="label_id" id="label_id" value="{{ old('label_id') }}">
                     </p>
@@ -102,27 +110,45 @@
                         <label for="grading_media">Grading</label><br>
                         <select name="grading_media" class="custom-select">
                             <option value="" @if (old('grading_media') == '') selected @endif>Grading Media</option>
-                            <option value="100" @if (old('grading_media') == '100') selected @endif>100% - GER: M- / US: NM</option>
-                            <option value="85" @if (old('grading_media') == '85') selected @endif>85% - GER: M-- / US: NM</option>
-                            <option value="70" @if (old('grading_media') == '70') selected @endif>70% - GER: VG++ / US: VG+</option>
-                            <option value="50" @if (old('grading_media') == '50') selected @endif>50% - GER: VG+ / US: VG+</option>
-                            <option value="35" @if (old('grading_media') == '35') selected @endif>35% - GER: VG / US: VG</option>
-                            <option value="25" @if (old('grading_media') == '25') selected @endif>25% - GER: VG- / US: VG</option>
-                            <option value="15" @if (old('grading_media') == '15') selected @endif>15% - GER: VG-- / US: VG-</option>
-                            <option value="10" @if (old('grading_media') == '10') selected @endif>10% - GER: G+ / US: VG-</option>
-                            <option value="5" @if (old('grading_media') == '5') selected @endif>5% - GER G / US: G</option>
+                            <option value="100" @if (old('grading_media') == '100') selected @endif>100% - GER: M- / US: NM
+                            </option>
+                            <option value="85" @if (old('grading_media') == '85') selected @endif>85% - GER: M-- / US: NM
+                            </option>
+                            <option value="70" @if (old('grading_media') == '70') selected @endif>70% - GER: VG++ / US: VG+
+                            </option>
+                            <option value="50" @if (old('grading_media') == '50') selected @endif>50% - GER: VG+ / US: VG+
+                            </option>
+                            <option value="35" @if (old('grading_media') == '35') selected @endif>35% - GER: VG / US: VG
+                            </option>
+                            <option value="25" @if (old('grading_media') == '25') selected @endif>25% - GER: VG- / US: VG
+                            </option>
+                            <option value="15" @if (old('grading_media') == '15') selected @endif>15% - GER: VG-- / US: VG-
+                            </option>
+                            <option value="10" @if (old('grading_media') == '10') selected @endif>10% - GER: G+ / US: VG-
+                            </option>
+                            <option value="5" @if (old('grading_media') == '5') selected @endif>5% - GER G / US: G
+                            </option>
                         </select><br>
                         <select name="grading_cover" class="custom-select">
                             <option value="" @if (old('grading_cover') == '') selected @endif>Grading Cover</option>
-                            <option value="100" @if (old('grading_cover') == '100') selected @endif>100% - GER: M- / US: NM</option>
-                            <option value="85" @if (old('grading_cover') == '85') selected @endif>85% - GER: M-- / US: NM</option>
-                            <option value="70" @if (old('grading_cover') == '70') selected @endif>70% - GER: VG++ / US: VG+</option>
-                            <option value="50" @if (old('grading_cover') == '50') selected @endif>50% - GER: VG+ / US: VG+</option>
-                            <option value="35" @if (old('grading_cover') == '35') selected @endif>35% - GER: VG / US: VG</option>
-                            <option value="25" @if (old('grading_cover') == '25') selected @endif>25% - GER: VG- / US: VG</option>
-                            <option value="15" @if (old('grading_cover') == '15') selected @endif>15% - GER: VG-- / US: VG-</option>
-                            <option value="10" @if (old('grading_cover') == '10') selected @endif>10% - GER: G+ / US: VG-</option>
-                            <option value="5" @if (old('grading_cover') == '5') selected @endif>5% - GER G / US: G</option>
+                            <option value="100" @if (old('grading_cover') == '100') selected @endif>100% - GER: M- / US: NM
+                            </option>
+                            <option value="85" @if (old('grading_cover') == '85') selected @endif>85% - GER: M-- / US: NM
+                            </option>
+                            <option value="70" @if (old('grading_cover') == '70') selected @endif>70% - GER: VG++ / US: VG+
+                            </option>
+                            <option value="50" @if (old('grading_cover') == '50') selected @endif>50% - GER: VG+ / US: VG+
+                            </option>
+                            <option value="35" @if (old('grading_cover') == '35') selected @endif>35% - GER: VG / US: VG
+                            </option>
+                            <option value="25" @if (old('grading_cover') == '25') selected @endif>25% - GER: VG- / US: VG
+                            </option>
+                            <option value="15" @if (old('grading_cover') == '15') selected @endif>15% - GER: VG-- / US: VG-
+                            </option>
+                            <option value="10" @if (old('grading_cover') == '10') selected @endif>10% - GER: G+ / US: VG-
+                            </option>
+                            <option value="5" @if (old('grading_cover') == '5') selected @endif>5% - GER G / US: G
+                            </option>
                         </select>
                     </p>
                     <p>

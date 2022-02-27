@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Label;
 use App\Models\Record;
 use App\Http\Requests\StoreLabelRequest;
@@ -57,6 +58,22 @@ class LabelController extends Controller
             $label->name = $request->input('name');
             $label->description = $request->input('description');
             $label->save(); //persist the data
+
+            //save the image 
+            if ($request->hasFile('file')) {
+                $files = $request->file('file');
+                foreach ($files as $file) {
+                    $name = $file->getClientOriginalName();
+                    $path = $file->store('images', 'public');
+
+                    $save = new Image;
+                    $save->reference = 'label';
+                    $save->reference_id = $label->id;
+                    $save->name = $name;
+                    $save->path = $path;
+                    $save->save();
+                };
+            }
             return redirect()->route('labels.create')->with('info', 'Label ' . $request->input('name') . ' added successfully');
         }
     }
@@ -73,8 +90,12 @@ class LabelController extends Controller
         $label = Label::find($label->id);
 
         $records = Record::with(['label'])->where('label_id', '=', $label->id)->get();
+
+        $images = Image::where('reference', '=', 'label')
+            ->where('reference_id', '=', $label->id)
+            ->get();
         //dd($records);
-        return view('labels.details', ['label' => $label, 'records' => $records]);
+        return view('labels.details', ['label' => $label, 'records' => $records, 'images' => $images]);
     }
 
     /**
@@ -85,8 +106,19 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        //
+        //Find the label
+        $label = Label::where('id', '=', $label->id)->first();
+
+        $images = Image::where('reference', '=', 'label')
+            ->where('reference_id', '=', $label->id)
+            ->get();
+        if (empty($label)) {
+            return redirect()->route('labels.index')->with('error', 'Invalid label');
+        } else {
+            return view('labels.edit', ['label' => $label, 'images' => $images]);
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -97,7 +129,18 @@ class LabelController extends Controller
      */
     public function update(UpdateLabelRequest $request, Label $label)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $label->id = $request->id;
+        $label->name = $request->name;
+        $label->description = $request->description;
+
+        $label->save();
+
+        return redirect()->route('labels.index')->with('info', 'Label ' . $label->name . ' updated successfully');
+
     }
 
     /**

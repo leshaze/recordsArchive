@@ -21,10 +21,15 @@ class DatabaseSeeder extends Seeder
         //\App\Models\User::factory(10)->create();
 
         DB::table('users')->insert([
-            ['id' => '1', 'name' => 'Testuser', 'username' => 'Test', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
-            ['id' => '2', 'name' => 'Testuser 2', 'username' => 'Test2', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
-            ['id' => '3', 'name' => 'Testuser 3', 'username' => 'Test3', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
-            ['id' => '4', 'name' => 'Testuser 4', 'username' => 'Test4', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
+            ['id' => '1', 'name' => 'Testuser', 'role_id' => '1', 'username' => 'Test', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
+            ['id' => '2', 'name' => 'Testuser 2', 'role_id' => '1','username' => 'Test2', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
+            ['id' => '3', 'name' => 'Testuser 3', 'role_id' => '1','username' => 'Test3', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
+            ['id' => '4', 'name' => 'Testuser 4', 'role_id' => '1','username' => 'Test4', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
+        ]);
+
+        DB::table('roles')->insert([
+            ['id' => '1', 'name'=> 'admin'],
+            ['id' => '2', 'name' => 'user']
         ]);
 
         DB::table('artists')->insert([

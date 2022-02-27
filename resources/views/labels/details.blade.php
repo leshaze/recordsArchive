@@ -4,15 +4,28 @@
     <div class="container">
         <div class="wrapper">
             <div class="card">
-                <div class="card-header">{{ $label->name }}</div>
+                <div class="card-header">{{ $label->name }} <a
+                        href="{{ route('labels.edit', ['label' => $label->id]) }}" class="btn btn-sm"><i
+                            class="bi bi-pencil-square"></i></a></td>
+                </div>
+                <div>
+                    @foreach ($images as $image)
+                        <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
+                            alt="{{ $image->name }}">
+                    @endforeach
+                </div>
                 <ul>
                     @foreach ($records as $record)
                         <li>
-                            Record: <a href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a> - Artist: <a href="{{ route('artists.show', ['artist' => $record->artist->id]) }}">{{ $record->artist->name }}</a>
+                            Record: <a
+                                href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a> -
+                            Artist: <a
+                                href="{{ route('artists.show', ['artist' => $record->artist->id]) }}">{{ $record->artist->name }}</a>
                         </li>
                     @endforeach
                 </ul>
             </div>
+
         </div>
     </div>
 @endsection

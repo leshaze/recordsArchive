@@ -5,7 +5,7 @@
         <div class="wrapper flex" id="labelCreate">
             <div class="card" id="labelCreate">
                 <div class="card-header">{{ __('Create Label') }}</div>
-                <form action="{{ route('labels.store') }}" method="post" class="Label">
+                <form action="{{ route('labels.store') }}" method="post" class="Label" enctype="multipart/form-data">
                     @csrf
                     <p>
                         <label for="title">Label</label>
@@ -18,7 +18,11 @@
                             class="form-control  @error('name') border border-danger @enderror" placeholder="Label"
                             autofocus="" value="{{ old('name') }}">
                     </p>
+                    <p></p>               
                     <p></p>
+                    <p>
+                        <input type="file" name="file[]" multiple />
+                    </p>
                     <p></p>
                     <p class="full-width">
                         <textarea class="form-control" name="description" id="description" placeholder="Beschreibung"

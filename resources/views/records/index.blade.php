@@ -26,46 +26,101 @@
                             <th>Delete</th>
                         </tr>
                         @foreach ($records as $record)
-                            <tr @if ($record->sold) style="background-color:
+                            <tr
+                                @if ($record->sold) style="background-color:
                                 #d3d3d3; text-decoration: line-through;"
                             @elseif ($record->lost) style="background-color: #800080; text-decoration:
-                                line-through; "
-                        @endif >
-                        <td>{{ $record->kind }}</td>
-                        <td><a href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">
-                                {{ $record->artist->name }} </a></td>
-                        <td><a href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a>
-                        </td>
-                        <td>@if ($record->user->name){{ $record->user->name }} @endif</td>
-                        <td>
-                            @if ($record->label_id)
-                                <a
-                                    href="{{ route('labels.show', ['label' => $record->label_id]) }}">{{ $record->label->name }}</a>
-                            @endif
-                        </td>
-                        <td>@if ($record->grading_cover){{ $record->grading_cover }} @endif</td>
-                        <td>@if ($record->grading_media){{ $record->grading_media }} @endif</td>
-                        <td>@if ($record->catalog_number){{ $record->catalog_number }} @endif</td>
-                        <td>@if ($record->matrix_number){{ $record->matrix_number }} @endif</td>
-                        <td>@if ($record->archive_number){{ $record->archive_number }} @endif</td>
-                        <td>@if ($record->barcode){{ $record->barcode }} @endif</td>
-                        <td>@if ($record->current_price){{ $record->current_price }} € @endif</td>
-                        <td>@if ($record->release_date){{ $record->release_date }} @endif</td>
-                        <td>@if ($record->country_id){{ $record->country->name }} @endif</td>
-                        <td><a href="{{ route('records.edit', ['record' => $record->id]) }}" class="btn btn-sm"><i
-                                    class="bi bi-pencil-square"></i></a></td>
-                        <td>
-                            <form action="{{ route('records.destroy', ['record' => $record->id]) }}" method="post">
+                                line-through; " @endif>
+                                <td>{{ $record->kind }}</td>
+                                <td><a href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">
+                                        {{ $record->artist->name }} </a></td>
+                                <td><a
+                                        href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a>
+                                </td>
+                                <td>
+                                    @if ($record->user->name)
+                                        {{ $record->user->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->label_id)
+                                        <a
+                                            href="{{ route('labels.show', ['label' => $record->label_id]) }}">{{ $record->label->name }}</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->grading_cover)
+                                        {{ $record->grading_cover }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->grading_media)
+                                        {{ $record->grading_media }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->catalog_number)
+                                        {{ $record->catalog_number }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->matrix_number)
+                                        {{ $record->matrix_number }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->archive_number)
+                                        {{ $record->archive_number }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->barcode)
+                                        {{ $record->barcode }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->current_price)
+                                        {{ $record->current_price }} €
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->release_date)
+                                        {{ $record->release_date }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($record->country_id)
+                                        {{ $record->country->name }}
+                                    @endif
+                                </td>
+                                <td><a href="{{ route('records.edit', ['record' => $record->id]) }}"
+                                        class="btn btn-sm">
+                                        <i class="bi bi-pencil-square"></i></a>
+                                </td>
+                                <td>
+                                    {{-- <form action="{{ route('records.destroy', ['record' => $record->id]) }}" method="post">
                                 @method('DELETE')
+                                {{ csrf_field() }}
                                 <button class="btn btn-link" onclick="return confirm('Delete {{ $record->artist->name }} - {{ $record->title }}?')"><i
                                     class="bi bi-trash"></i> </button>
-                            </form>
-                        </td>
-                        </tr>
-                @endforeach
-                </table>
-            @else
-                There is no data yet.
+                            </form> --}}
+                                    {{-- <a href="#" class="btn btn-sm" name="record_delete" id="{{ $record->id }}">
+                                        <i class="bi bi-trash"></i></a> --}}
+
+                                    <a href="javascript:document.getElementById('delete-record-form{{$record->id}}').submit();"
+                                        class="btn btn-sm"><i class="bi bi-trash"></i></a>
+                                    <form id="delete-record-form{{$record->id}}"
+                                        action="{{ route('records.destroy', ['record' => $record->id]) }}" method="post"
+                                        style="display: none;">
+                                        @method('DELETE')
+                                        {{ csrf_field() }}
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                @else
+                    There is no data yet.
                 @endif
             </div>
             {{ $records->links() }}

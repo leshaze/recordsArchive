@@ -4,7 +4,16 @@
     <div class="container">
         <div class="wrapper">
             <div class="card">
-                <div class="card-header">{{ $artist->name }}</div>
+                <div class="card-header">{{ $artist->name }} <a
+                        href="{{ route('artists.edit', ['artist' => $artist->id]) }}" class="btn btn-sm"><i
+                            class="bi bi-pencil-square"></i></a></td>
+                </div>
+                <div>
+                    @foreach ($images as $image)
+                        <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
+                            alt="{{ $image->name }}">
+                    @endforeach
+                </div>
                 <ul>
                     @foreach ($records as $record)
                         <li>

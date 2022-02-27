@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Label;
 use App\Models\Artist;
 use App\Models\Record;
 use App\Models\Country;
 use function Psy\debug;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
 
@@ -31,7 +33,12 @@ class RecordController extends Controller
         //     ->select('records.*')
         //     ->orderBy('artists.name', 'ASC')
         //     ->paginate(10);
-        $records = Record::where('user_id', '=', AUTH::user()->id)->paginate(10);
+        if (AUTH::user()->role_id == 1) {
+            $records = Record::paginate(10);
+        } else {
+            $records = Record::where('user_id', '=', AUTH::user()->id)->paginate(10);
+        }
+
         //dd($records);
         return view('records.index', ['records' => $records]);
     }
@@ -59,6 +66,7 @@ class RecordController extends Controller
             'title' => 'required',
             'label_name' => 'required',
             'country_name' => 'max:4',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
         //Persist the record in the database
         //form data is available in the request object
@@ -74,9 +82,8 @@ class RecordController extends Controller
             // If not, try to get it from the database.
             $get_artist_id = Artist::firstOrCreate([
                 'name' => $request->input('artist_name')
-                ]);
+            ]);
             $record->artist_id = $get_artist_id->id;
-            
         } else {
             // If an artist_id is proviced in the post request, just use it.
             $record->artist_id = $request->input('artist_id');
@@ -91,7 +98,6 @@ class RecordController extends Controller
                 'name' => $request->input('label_name')
             ]);
             $record->label_id = $get_label_id->id;
-
         } else {
             // If a label_id is provided in the post request, just use it
             $record->label_id = $request->input('label_id');
@@ -111,8 +117,7 @@ class RecordController extends Controller
                     'name' => $request->input('country_name')
                 ]);
                 $record->country_id = $get_country_id->id;
-            }
-            else {
+            } else {
                 $record->country_id = $request->input('country_id');
             }
         }
@@ -142,6 +147,22 @@ class RecordController extends Controller
         $record->note           = $request->input('note');
 
         $record->save(); //persist the data
+
+        //save the image 
+        if ($request->hasFile('file')) {
+            $files = $request->file('file');
+            foreach ($files as $file) {
+                $name = $file->getClientOriginalName();
+                $path = $file->store('images', 'public');
+
+                $save = new Image;
+                $save->reference = 'record';
+                $save->reference_id = $record->id;
+                $save->name = $name;
+                $save->path = $path;
+                $save->save();
+            };
+        }
         return redirect()->route('records.index')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' added successfully');
     }
 
@@ -153,15 +174,26 @@ class RecordController extends Controller
      */
     public function show(Record $record)
     {
-        //Return view to create artist
-        $record = Record::where('id', '=', $record->id)
+        //Return view to show artist
+        if (AUTH::user()->role_id == 1) {
+            $record = Record::where('id', '=', $record->id)
+            ->first();
+        }
+        else {
+            $record = Record::where('id', '=', $record->id)
             ->where('user_id', '=', AUTH::user()->id)
             ->first();
+        }
+        if($record){
+            $images = Image::where('reference', '=', 'record')
+            ->where('reference_id', '=', $record->id)
+            ->get();
+        }
 
         if (empty($record)) {
             return redirect()->route('records.index')->with('error', 'Invalid record');
         } else {
-            return view('records.details', ['record' => $record]);
+            return view('records.details', ['record' => $record, 'images' => $images]);
         }
     }
 
@@ -176,10 +208,14 @@ class RecordController extends Controller
         //Find the artist
         $record = Record::where('id', '=', $record->id)
             ->where('user_id', '=', AUTH::user()->id)->first();
+
+        $images = Image::where('reference', '=', 'record')
+            ->where('reference_id', '=', $record->id)
+            ->get();
         if (empty($record)) {
             return redirect()->route('records.index')->with('error', 'Invalid record');
         } else {
-            return view('records.edit', ['record' => $record]);
+            return view('records.edit', ['record' => $record, 'images' => $images]);
         }
     }
 
@@ -222,7 +258,7 @@ class RecordController extends Controller
             // If not, try to get it from the database.
             $get_country_id = Country::firstOrCreate([
                 'name' => $request->country_name
-                ]);
+            ]);
             $record->country_id = $get_country_id->id;
         }
 
@@ -259,10 +295,15 @@ class RecordController extends Controller
     {
         //Retrieve the employee
         dd($record);
-        $record = Record::find($record->getOriginal('id'));
+        $record = Record::find($record->id);
+        $images = Image::where('reference', '=', 'record')
+            ->where('reference_id', '=', $record->id)
+            ->get();
+        foreach ($images as $image) {
+            Storage::delete($image->name);
+        }
         //delete
         $record->delete();
         return redirect()->route('records')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' deleted successfully');
     }
-
 }

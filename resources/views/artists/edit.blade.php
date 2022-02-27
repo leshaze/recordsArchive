@@ -2,10 +2,10 @@
 @section('title', '- Edit Artist')
 @section('content')
     <div class="container">
-        <div class="wrapper flex" id="artistCreate">
-            <div class="card" id="artistCreate">
-                <div class="card-header">{{ __('Create Artist') }}</div>
-                <form action="{{ route('artists.store', ['artist' => $artist->id]) }}" method="post"
+        <div class="wrapper flex" id="artistEdit">
+            <div class="card" id="artistEdit">
+                <div class="card-header">{{ __('Edit Artist') }}</div>
+                <form action="{{ route('artists.update', ['artist' => $artist->id]) }}" method="post"
                     class="Artist">
                     @method('PUT')
                     @csrf
@@ -19,8 +19,24 @@
                         <input type="text" name="name" id="name"
                             class="form-control  @error('name') border border-danger @enderror" placeholder="Künstler"
                             autofocus="" value="{{ $artist->name }}">
+                        <input type="hidden" name="id" id="id" value="{{ $artist->id }}">
                     </p>
                     <p></p>
+                    <p></p>
+                    @empty($images)
+                        <p>
+                            @foreach ($images as $image)
+                                <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
+                                    alt="{{ $image->name }}">
+                            @endforeach
+
+                        </p>
+                        <p></p>
+                        <p></p>
+                    @endempty
+                    <p>
+                    <input type="file" name="file[]" multiple />
+                    </p>
                     <p></p>
                     <p class="full-width">
                         <textarea class="form-control" name="description" id="description" placeholder="Beschreibung"

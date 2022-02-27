@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Artist;
 use App\Models\Record;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
 
@@ -53,9 +55,8 @@ class ArtistController extends Controller
         ]);
 
         $get_artist_id = Artist::where('name', '=', $request->input('name'))->first();
-        if ($get_artist_id)
-        {
-            return redirect()->route('artists.create')->with('error', 'Artist '. $request->input('name') .' is already in the database.');
+        if ($get_artist_id) {
+            return redirect()->route('artists.create')->with('error', 'Artist ' . $request->input('name') . ' is already in the database.');
         }
         if (!$get_artist_id) {
             //Persist the record in the database
@@ -66,6 +67,22 @@ class ArtistController extends Controller
             $artist->name = $request->input('name');
             $artist->description = $request->input('description');
             $artist->save(); //persist the data
+
+            //save the image 
+            if ($request->hasFile('file')) {
+                $files = $request->file('file');
+                foreach ($files as $file) {
+                    $name = $file->getClientOriginalName();
+                    $path = $file->store('images', 'public');
+
+                    $save = new Image;
+                    $save->reference = 'artist';
+                    $save->reference_id = $artist->id;
+                    $save->name = $name;
+                    $save->path = $path;
+                    $save->save();
+                };
+            }
             return redirect()->route('artists.create')->with('info', 'Artist ' . $request->input('name') . ' added successfully');
         }
     }
@@ -81,9 +98,13 @@ class ArtistController extends Controller
         //Return view to detail artist
         $artist = Artist::find($artist->id);
 
-        $records = Record::with(['artist'])->where('artist_id','=',$artist->id)->get();
+        $records = Record::with(['artist'])->where('artist_id', '=', $artist->id)->get();
+
+        $images = Image::where('reference', '=', 'artist')
+            ->where('reference_id', '=', $artist->id)
+            ->get();
         //dd($records);
-        return view('artists.details', ['artist' => $artist, 'records' => $records]);
+        return view('artists.details', ['artist' => $artist, 'records' => $records, 'images' => $images]);
     }
 
     /**
@@ -94,7 +115,17 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        //
+
+        //Find the atist
+        $label = Artist::where('id', '=', $artist->id)->first();
+        $images = Image::where('reference', '=', 'artist')
+            ->where('reference_id', '=', $artist->id)
+            ->get();
+        if (empty($artist)) {
+            return redirect()->route('artists.index')->with('error', 'Invalid artist');
+        } else {
+            return view('artists.edit', ['artist' => $artist, 'images' => $images]);
+        }
     }
 
     /**
@@ -106,7 +137,18 @@ class ArtistController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $artist->id = $request->id;
+        $artist->name = $request->name;
+        $artist->description = $request->description;
+
+        $artist->save();
+
+        return redirect()->route('labels.index')->with('info', 'Artist ' . $artist->name . ' updated successfully');
+
     }
 
     /**
