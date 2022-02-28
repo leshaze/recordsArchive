@@ -14,7 +14,7 @@
                                 {{ $message }}
                             </span>
                         @enderror
-                        <input type="text" name="name" id="name"
+                        <input type="text" name="label_name" id="label_name"
                             class="form-control  @error('name') border border-danger @enderror" placeholder="Label"
                             autofocus="" value="{{ old('name') }}">
                     </p>

@@ -42,10 +42,10 @@ class LabelController extends Controller
     {
         //check the input
         $this->validate($request, [
-            'name' => 'required'
+            'label_name' => 'required'
         ]);
 
-        $get_label_id = Label::where('name', '=', $request->input('name'))->first();
+        $get_label_id = Label::where('name', '=', $request->input('label_name'))->first();
         if ($get_label_id) {
             return redirect()->route('labels.create')->with('error', 'Label ' . $request->input('name') . ' is already in the database.');
         }
@@ -55,7 +55,7 @@ class LabelController extends Controller
             $label = new Label();
             //input method is used to get the value of input with its
             //name specified
-            $label->name = $request->input('name');
+            $label->name = $request->input('label_name');
             $label->description = $request->input('description');
             $label->save(); //persist the data
 
@@ -130,11 +130,11 @@ class LabelController extends Controller
     public function update(UpdateLabelRequest $request, Label $label)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'label_name' => 'required'
         ]);
 
         $label->id = $request->id;
-        $label->name = $request->name;
+        $label->name = $request->label_name;
         $label->description = $request->description;
 
         $label->save();

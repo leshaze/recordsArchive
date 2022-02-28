@@ -16,7 +16,7 @@
                                 {{ $message }}
                             </span>
                         @enderror
-                        <input type="text" name="name" id="name"
+                        <input type="text" name="artist_name" id="artist_name"
                             class="form-control  @error('name') border border-danger @enderror" placeholder="Künstler"
                             autofocus="" value="{{ $artist->name }}">
                         <input type="hidden" name="id" id="id" value="{{ $artist->id }}">

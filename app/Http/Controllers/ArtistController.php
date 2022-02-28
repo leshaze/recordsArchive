@@ -51,10 +51,10 @@ class ArtistController extends Controller
     {
         //check the input
         $this->validate($request, [
-            'name' => 'required'
+            'artist_name' => 'required'
         ]);
 
-        $get_artist_id = Artist::where('name', '=', $request->input('name'))->first();
+        $get_artist_id = Artist::where('name', '=', $request->input('artist_name'))->first();
         if ($get_artist_id) {
             return redirect()->route('artists.create')->with('error', 'Artist ' . $request->input('name') . ' is already in the database.');
         }
@@ -64,7 +64,7 @@ class ArtistController extends Controller
             $artist = new Artist();
             //input method is used to get the value of input with its
             //name specified
-            $artist->name = $request->input('name');
+            $artist->name = $request->input('artist_name');
             $artist->description = $request->input('description');
             $artist->save(); //persist the data
 
@@ -142,7 +142,7 @@ class ArtistController extends Controller
         ]);
 
         $artist->id = $request->id;
-        $artist->name = $request->name;
+        $artist->name = $request->artist_name;
         $artist->description = $request->description;
 
         $artist->save();
