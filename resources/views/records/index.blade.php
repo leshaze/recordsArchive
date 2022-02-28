@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="wrapper">
-            <div class="card">
+            <div class="card table-responsive">
                 <div class="card-header">{{ __('Records') }}</div>
                 @if (!empty($records) && $records->count())
                     <table class="table small">

@@ -174,7 +174,7 @@ class ArtistController extends Controller
             $artist->delete();
             return redirect()->route('artists.index')->with('info', 'Artist ' . $artist->name . ' deleted successfully');
         } else {
-            return redirect()->route('labels.index')->with('error', 'Artist ' . $artist->name . ' could not be deleted. ');
+            return redirect()->route('artists.index')->with('error', 'Artist ' . $artist->name . ' could not be deleted. ');
         }
     }
 }
