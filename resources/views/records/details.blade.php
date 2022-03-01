@@ -18,9 +18,7 @@
                 <div>
                     @foreach ($images as $image)
                         <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
-                            alt="{{ $image->name }}"><button class="btn btn-link"
-                            onclick="return confirm('Delete {{ $record->artist->name }} - {{ $record->title }}?')"><i
-                                class="bi bi-trash"></i> </button>
+                            alt="{{ $image->name }}">
                     @endforeach
                 </div>
                 <ul>

@@ -138,7 +138,7 @@ class ArtistController extends Controller
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'artist_name' => 'required'
         ]);
 
         $artist->id = $request->id;
