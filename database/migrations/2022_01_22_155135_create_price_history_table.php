@@ -17,8 +17,8 @@ class CreatePriceHistoryTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('price');
-            $table->integer('platforms_id');
-            $table->integer('records_id');
+            $table->integer('platform_id');
+            $table->integer('record_id');
         });
     }
 

@@ -12,9 +12,13 @@ try {
 
 window.axios = require('axios');
 window.$ = require('jquery');
+// window.Chart = require('chart.js');
+// window.myChart = new Chart(ctx);
+
 
 import 'jquery-ui/themes/base/all.css';
 import 'jquery-ui/ui/widgets/autocomplete.js';
+
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

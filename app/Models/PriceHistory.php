@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class PriceHistory extends Model
 {
     use HasFactory;
+
+    protected $table = "price_history";
+
+    // public function price()
+    // {
+    //     return $this->belongsTo(Record::class);
+    // }
 }

@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -18,6 +20,13 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
         });
+
+        DB::table('roles')->insert(
+            array(
+                ['id' => '1', 'created_at' => Carbon::now(), 'name' => 'admin'],
+                ['id' => '2', 'created_at' => Carbon::now(), 'name' => 'user']
+                )
+            );
     }
 
     /**

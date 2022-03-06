@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
+use App\Models\PriceHistory;
 
 class RecordController extends Controller
 {
@@ -134,14 +135,10 @@ class RecordController extends Controller
         if ($request->input('current_price') != NULL) {
             $checked_currentPrice = str_replace(',', '.', $request->input('current_price'));
             $record->current_price  = $checked_currentPrice;
-        } else {
-            $record->current_price  = $request->input('current_price');
         }
         if ($request->input('buy_price') != NULL) {
             $checked_buyPrice = str_replace(',', '.', $request->input('buy_price'));
             $record->buy_price      = $checked_buyPrice;
-        } else {
-            $record->buy_price      = $request->input('buy_price');
         }
 
         $record->archive_number = $request->input('archive_number');
@@ -164,6 +161,15 @@ class RecordController extends Controller
                 $image->save();
             };
         }
+        // //Save pricehistory
+        // $pricehistory = new PriceHistory();
+        // $pricehistory->price = str_replace(',', '.', $request->input('current_price'));
+        // $pricehistory->record_id = $record->id;
+        // $pricehistory->platform_id = '99';
+        // $pricehistory->save();
+
+        //dd($pricehistory);
+
         return redirect()->route('records.index')->with('info', 'Record ' . $record->title . ' von ' . $record->artist->name . ' added successfully');
     }
 
@@ -268,6 +274,14 @@ class RecordController extends Controller
 
         if (is_numeric($request->grading_media)) $record->grading_media = $request->grading_media;
         if (is_numeric($request->grading_cover)) $record->grading_cover  = $request->grading_cover;
+        // if($record->current_price != $request->current_price) {
+        //             //Save pricehistory
+        //     $pricehistory = new PriceHistory();
+        //     $pricehistory->price = str_replace(',', '.', $request->current_price);
+        //     $pricehistory->record_id = $record->id;
+        //     $pricehistory->platform_id = '99';
+        //     $pricehistory->save();
+        // }
         $record->current_price  = ($request->current_price) ? str_replace(',', '.', $request->current_price) : $record->current_price = null;
         $record->buy_price  = ($request->buy_price) ? str_replace(',', '.', $request->buy_price) : $record->buy_price = null;
         $record->archive_number = $request->archive_number;

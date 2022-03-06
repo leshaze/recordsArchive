@@ -27,11 +27,6 @@ class DatabaseSeeder extends Seeder
             ['id' => '4', 'name' => 'Testuser 4', 'role_id' => '1','username' => 'Test4', 'email' => Str::random(10).'@test', 'password' => Hash::make('password'), 'created_at' => Carbon::now() ],
         ]);
 
-        DB::table('roles')->insert([
-            ['id' => '1', 'name'=> 'admin'],
-            ['id' => '2', 'name' => 'user']
-        ]);
-
         DB::table('artists')->insert([
             ['id' => '1', 'created_at' => Carbon::now(), 'name' => 'King Crimson', 'description' => 'NULL'],
             ['id' => '2', 'created_at' => Carbon::now(), 'name' => 'Sabaton', 'description' => 'NULL'],

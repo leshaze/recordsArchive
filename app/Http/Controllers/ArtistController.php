@@ -117,7 +117,7 @@ class ArtistController extends Controller
     {
 
         //Find the atist
-        $label = Artist::where('id', '=', $artist->id)->first();
+        //$label = Artist::where('id', '=', $artist->id)->first();
         $images = Image::where('reference', '=', 'artist')
             ->where('reference_id', '=', $artist->id)
             ->get();
