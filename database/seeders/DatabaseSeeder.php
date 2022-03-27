@@ -28,30 +28,30 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('artists')->insert([
-            ['id' => '1', 'created_at' => Carbon::now(), 'name' => 'King Crimson', 'description' => 'NULL'],
-            ['id' => '2', 'created_at' => Carbon::now(), 'name' => 'Sabaton', 'description' => 'NULL'],
-            ['id' => '3', 'created_at' => Carbon::now(), 'name' => 'Gov`t Mule', 'description' => 'NULL'],
-            ['id' => '4', 'created_at' => Carbon::now(), 'name' => 'KRAFTWERK', 'description' => 'NULL'],
-            ['id' => '5', 'created_at' => Carbon::now(), 'name' => 'The DOORS', 'description' => 'NULL'],
-            ['id' => '6', 'created_at' => Carbon::now(), 'name' => 'The ROLLING STONES', 'description' => 'NULL'],
-            ['id' => '7', 'created_at' => Carbon::now(), 'name' => 'SCORPIONS', 'description' => 'NULL'],
-            ['id' => '8', 'created_at' => Carbon::now(), 'name' => 'Chicken Shack', 'description' => 'NULL'],
-            ['id' => '9', 'created_at' => Carbon::now(), 'name' => 'FREEDOM', 'description' => 'NULL'],
-            ['id' => '10', 'created_at' => Carbon::now(), 'name' => 'BOB DYLAN', 'description' => 'NULL'],
-            ['id' => '11', 'created_at' => Carbon::now(), 'name' => 'Roger Chapman & The Shortlist', 'description' => 'NULL'],
+            ['id' => '1', 'created_at' => Carbon::now(), 'name' => 'King Crimson', 'description' => NULL],
+            ['id' => '2', 'created_at' => Carbon::now(), 'name' => 'Sabaton', 'description' => NULL],
+            ['id' => '3', 'created_at' => Carbon::now(), 'name' => 'Gov`t Mule', 'description' => NULL],
+            ['id' => '4', 'created_at' => Carbon::now(), 'name' => 'KRAFTWERK', 'description' => NULL],
+            ['id' => '5', 'created_at' => Carbon::now(), 'name' => 'The DOORS', 'description' => NULL],
+            ['id' => '6', 'created_at' => Carbon::now(), 'name' => 'The ROLLING STONES', 'description' => NULL],
+            ['id' => '7', 'created_at' => Carbon::now(), 'name' => 'SCORPIONS', 'description' => NULL],
+            ['id' => '8', 'created_at' => Carbon::now(), 'name' => 'Chicken Shack', 'description' => NULL],
+            ['id' => '9', 'created_at' => Carbon::now(), 'name' => 'FREEDOM', 'description' => NULL],
+            ['id' => '10', 'created_at' => Carbon::now(), 'name' => 'BOB DYLAN', 'description' => NULL],
+            ['id' => '11', 'created_at' => Carbon::now(), 'name' => 'Roger Chapman & The Shortlist', 'description' => NULL],
         ]);  
 
         DB::table('labels')->insert([
-            ['id' => '1', 'created_at' => Carbon::now(), 'name' => 'Robert Fripp', 'description' => 'NULL'],
-            ['id' => '2', 'created_at' => Carbon::now(), 'name' => 'Nuclear Blast', 'description' => 'NULL'],
-            ['id' => '3', 'created_at' => Carbon::now(), 'name' => 'Volcano', 'description' => 'NULL'],
-            ['id' => '4', 'created_at' => Carbon::now(), 'name' => 'EMI', 'description' => 'NULL'],
-            ['id' => '5', 'created_at' => Carbon::now(), 'name' => 'Rhino', 'description' => 'NULL'],
-            ['id' => '6', 'created_at' => Carbon::now(), 'name' => 'Back to Black', 'description' => 'NULL'],
-            ['id' => '7', 'created_at' => Carbon::now(), 'name' => 'BRAIN Metronome', 'description' => 'NULL'],
-            ['id' => '8', 'created_at' => Carbon::now(), 'name' => 'BLUE HORIZON', 'description' => 'NULL'],
-            ['id' => '9', 'created_at' => Carbon::now(), 'name' => 'Vertigo Swirl', 'description' => 'NULL'],
-            ['id' => '10', 'created_at' => Carbon::now(), 'name' => 'Columbia', 'description' => 'NULL'],
+            ['id' => '1', 'created_at' => Carbon::now(), 'name' => 'Robert Fripp', 'description' => NULL],
+            ['id' => '2', 'created_at' => Carbon::now(), 'name' => 'Nuclear Blast', 'description' => NULL],
+            ['id' => '3', 'created_at' => Carbon::now(), 'name' => 'Volcano', 'description' => NULL],
+            ['id' => '4', 'created_at' => Carbon::now(), 'name' => 'EMI', 'description' => NULL],
+            ['id' => '5', 'created_at' => Carbon::now(), 'name' => 'Rhino', 'description' => NULL],
+            ['id' => '6', 'created_at' => Carbon::now(), 'name' => 'Back to Black', 'description' => NULL],
+            ['id' => '7', 'created_at' => Carbon::now(), 'name' => 'BRAIN Metronome', 'description' => NULL],
+            ['id' => '8', 'created_at' => Carbon::now(), 'name' => 'BLUE HORIZON', 'description' => NULL],
+            ['id' => '9', 'created_at' => Carbon::now(), 'name' => 'Vertigo Swirl', 'description' => NULL],
+            ['id' => '10', 'created_at' => Carbon::now(), 'name' => 'Columbia', 'description' => NULL],
         ]);
 
         DB::table('countries')->insert([
