@@ -18,11 +18,11 @@
                             class="form-control  @error('name') border border-danger @enderror" placeholder="Künstler"
                             autofocus="" value="{{ old('name') }}">
                     </p>     
-                    <p></p>               
+                    {{-- <p></p>               
                     <p></p>
                     <p>
                         <input type="file" name="file[]" multiple />
-                    </p>
+                    </p> --}}
                     <p></p>
                     <p class="full-width">
                         <textarea class="form-control" name="description" id="description" placeholder="Beschreibung"

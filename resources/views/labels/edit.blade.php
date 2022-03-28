@@ -20,7 +20,7 @@
                             autofocus="" value="{{ $label->name }}">
                         <input type="hidden" name="id" id="id" value="{{ $label->id }}">
                     </p>
-                    <p></p>
+                    {{-- <p></p>
                     <p></p>
                     <p>
                     <div>
@@ -29,14 +29,15 @@
                                 alt="{{ $image->name }}">
                         @endforeach
                     </div>
+                    </p> --}}
                     <p></p>
                     <p></p>
                     <br><input type="file" name="file[]" multiple />
                     </p>
                     <p></p>
                     <p class="full-width">
-                        <textarea class="form-control" name="description" id="description" placeholder="Beschreibung"
-                            autofocus="" rows="3">{{ $label->description }}</textarea>
+                        <textarea class="form-control" name="description" id="description" placeholder="Beschreibung" autofocus=""
+                            rows="3">{{ $label->description }}</textarea>
                     </p>
 
                     <button style="min-width:70px; max-width:90px" type="submit" class="btn btn-success">Submit</button>

@@ -23,7 +23,7 @@
                     </p>
                     <p></p>
                     <p></p>
-                    @empty($images)
+                    {{-- @empty($images)
                         <p>
                             @foreach ($images as $image)
                                 <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
@@ -33,7 +33,7 @@
                         </p>
                         <p></p>
                         <p></p>
-                    @endempty
+                    @endempty --}}
                     <p>
                     <input type="file" name="file[]" multiple />
                     </p>

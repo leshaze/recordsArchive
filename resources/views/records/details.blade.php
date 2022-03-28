@@ -15,7 +15,7 @@
                         {{ csrf_field() }}
                     </form>
                 </div>
-                <ul>
+                {{-- <ul>
                     @foreach ($images as $image)
                         <li>
                             <a href="#bild{{ $loop->count }}"><img src="{{ URL::asset('storage/' . $image->path) }}"
@@ -30,7 +30,7 @@
                                     width="250px" height="250px" alt="{{ $image->name }}"></a>
                         </li>
                     @endforeach
-                </ul>
+                </ul> --}}
                 
                     <ul>
                         <li><a href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">

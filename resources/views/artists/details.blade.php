@@ -16,10 +16,10 @@
                     </form>
                     </td>
                 </div>
-                        @foreach ($images as $image)
+                        {{-- @foreach ($images as $image)
                                 <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
                                     alt="{{ $image->name }}">
-                        @endforeach
+                        @endforeach --}}
 
                 <table class="table small xs">
                     <tr>

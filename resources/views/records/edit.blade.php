@@ -29,7 +29,7 @@
                             @if ($record->lost) checked @endif>
                         <label for="lost">Verloren</label><br>
                     </p>
-                    @if ($images)
+                    {{-- @if ($images)
                         <p>
                         <div>
                             @foreach ($images as $image)
@@ -41,11 +41,12 @@
                         </div>
                         </p>
                         <p></p>
-                    @endif
-                    <p>
+                    @endif --}}
+                    {{-- <p>
                         <input type="file" name="file[]" multiple />
                     </p>
                     <p></p>
+                    <p></p> --}}
                     <p></p>
                     <p>
                         <label for="title">Künstler</label>

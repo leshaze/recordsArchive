@@ -16,12 +16,12 @@
                                 {{ csrf_field() }}
                             </form></td>
                 </div>
-                <div>
+                {{-- <div>
                     @foreach ($images as $image)
                         <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
                             alt="{{ $image->name }}">
                     @endforeach
-                </div>
+                </div> --}}
                 <ul>
                     @foreach ($records as $record)
                         <li>

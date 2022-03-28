@@ -19,11 +19,11 @@
                             CD
                         </label>
                     </p>
-                    <p></p>
+                    {{-- <p></p>
                     <p></p>
                     <p>
                         <input type="file" name="file[]" multiple />
-                    </p>
+                    </p> --}}
                     <p></p>
                     <p></p>
                     <p>
