@@ -8,7 +8,7 @@
                         href="{{ route('artists.edit', ['artist' => $artist->id]) }}" class="btn btn-sm"><i
                             class="bi bi-pencil-square"></i></a>
                     <a href="javascript:document.getElementById('delete-artist-form').submit();" class="btn btn-sm"><i
-                            class="bi bi-trash"></i></a>
+                            class="bi bi-trash" onclick="return confirm('Delete {{ $artist->name }}?')"></i></a>
                     <form id="delete-artist-form" action="{{ route('artists.destroy', ['artist' => $artist->id]) }}"
                         method="post" style="display: none;">
                         @method('DELETE')

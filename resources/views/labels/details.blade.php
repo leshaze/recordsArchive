@@ -8,7 +8,7 @@
                         href="{{ route('labels.edit', ['label' => $label->id]) }}" class="btn btn-sm"><i
                             class="bi bi-pencil-square"></i></a>
                             <a href="javascript:document.getElementById('delete-label-form').submit();"
-                                class="btn btn-sm"><i class="bi bi-trash"></i></a>
+                                class="btn btn-sm" onclick="return confirm('Delete {{ $label->name }}?')"><i class="bi bi-trash"></i></a>
                             <form id="delete-label-form"
                                 action="{{ route('labels.destroy', ['label' => $label->id]) }}" method="post"
                                 style="display: none;">
