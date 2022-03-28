@@ -29,11 +29,11 @@
                                 alt="{{ $image->name }}">
                         @endforeach
                     </div>
-                    </p> --}}
+                    </p>
                     <p></p>
                     <p></p>
                     <br><input type="file" name="file[]" multiple />
-                    </p>
+                    </p> --}}
                     <p></p>
                     <p class="full-width">
                         <textarea class="form-control" name="description" id="description" placeholder="Beschreibung" autofocus=""
