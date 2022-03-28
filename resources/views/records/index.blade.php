@@ -98,17 +98,8 @@
                                         <i class="bi bi-pencil-square"></i></a>
                                 </td>
                                 <td>
-                                    {{-- <form action="{{ route('records.destroy', ['record' => $record->id]) }}" method="post">
-                                @method('DELETE')
-                                {{ csrf_field() }}
-                                <button class="btn btn-link" onclick="return confirm('Delete {{ $record->artist->name }} - {{ $record->title }}?')"><i
-                                    class="bi bi-trash"></i> </button>
-                            </form> --}}
-                                    {{-- <a href="#" class="btn btn-sm" name="record_delete" id="{{ $record->id }}">
-                                        <i class="bi bi-trash"></i></a> --}}
-
                                     <a href="javascript:document.getElementById('delete-record-form{{$record->id}}').submit();"
-                                        class="btn btn-sm"><i class="bi bi-trash"></i></a>
+                                        class="btn btn-sm" onclick="return confirm('Delete {{ $record->artist->name }} - {{ $record->title }}?')"><i class="bi bi-trash"></i></a>
                                     <form id="delete-record-form{{$record->id}}"
                                         action="{{ route('records.destroy', ['record' => $record->id]) }}" method="post"
                                         style="display: none;">
