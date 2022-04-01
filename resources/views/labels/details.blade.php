@@ -4,7 +4,8 @@
     <div class="container">
         <div class="wrapper">
             <div class="card">
-                <div class="card-header">{{ $label->name }} <a
+                <div class="card-header justify-content-between align-items-center d-flex">
+                    <div> {{ $label->name }} <a
                         href="{{ route('labels.edit', ['label' => $label->id]) }}" class="btn btn-sm"><i
                             class="bi bi-pencil-square"></i></a>
                             <a href="javascript:document.getElementById('delete-label-form').submit();"
@@ -14,7 +15,8 @@
                                 style="display: none;">
                                 @method('DELETE')
                                 {{ csrf_field() }}
-                            </form></td>
+                            </form></td></div>
+                <div><a class="btn btn-info btn-sm" href="{{ route('labels.print', ['label' => $label->id]) }}") ">Export</a></div>
                 </div>
                 {{-- <div>
                     @foreach ($images as $image)

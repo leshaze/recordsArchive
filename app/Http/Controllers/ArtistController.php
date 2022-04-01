@@ -177,4 +177,17 @@ class ArtistController extends Controller
             return redirect()->route('artists.index')->with('error', 'Artist ' . $artist->name . ' could not be deleted. ');
         }
     }
+
+    public function print(Artist $artist)
+    {
+        //Find the label        
+        //Return view to detail artist
+
+        $records = Record::with(['artist'])->where('artist_id', '=', $artist->id)
+        ->orderBy('name', 'ASC')
+        ->get();
+        
+        $total_value = $records->sum('current_price');
+        return view('artists.print', ['artist'=>$artist, 'records'=>$records, 'total_value'=>$total_value]);
+    }
 }

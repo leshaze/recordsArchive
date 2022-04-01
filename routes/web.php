@@ -28,6 +28,9 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/records/api/',[SearchController::class, 'getAutocomplete'])->name('autocomplete');
 Route::get('/record/{id}/delete',[RecordController::class, 'destroy'])->name('record.destroy');
+Route::get('/labels/{label}/print',[LabelController::class, 'print'])->name('labels.print');
+Route::get('/artists/{artist}/print',[ArtistController::class, 'print'])->name('artists.print');
+
 
 Route::resource('dashboard', DashboardController::class);
 Route::resource('artists', ArtistController::class);

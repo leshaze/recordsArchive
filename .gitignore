@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 .env
+.DS_Store
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
@@ -13,3 +14,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+storage/.DS_Store
+database/.DS_Store

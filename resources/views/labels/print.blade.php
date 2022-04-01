@@ -1,5 +1,5 @@
-@extends('layout.main')
-@section('title','Print Label')
+@extends('layout.app')
+@section('title','- Print Label')
 @section('content')
 <br><h2 class="offset-sm-1">{{$label->name}} - {{ $total_value }} €</h2>
   <div class="row">
@@ -25,7 +25,7 @@
                 @foreach($records as $record)
                   <tr>
                     <td>{{ $record->kind }}</td>
-                    <td><a href="{{route('artist.show',['id'=>$record->artist_id])}}">{{ $record->artist->name }}</td>
+                    <td>{{ $record->artist->name }}</td>
                     <td>{{ $record->title }}</td>
                     <td>{{ $record->label->name}}</td>
                     <td>{{ $record->grading_cover}}</td>

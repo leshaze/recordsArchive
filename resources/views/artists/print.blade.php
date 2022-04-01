@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.app')
 @section('title','Artist Details')
 @section('content')
 <br><h2 class="offset-sm-1">{{ $artist->name }} - {{ $total_value }} €</h2>
@@ -27,7 +27,7 @@
                     <td>{{ $record->kind }}</td>
                     <td>{{ $record->artist->name }}</td>
                     <td>{{ $record->title }}</td>
-                    <td>@if($record->label_id) <a href="{{route('label.show',['id'=>$record->label_id])}}">{{ $record->label->name}}</a> @endif</td>
+                    <td>@if($record->label_id) {{ $record->label->name}} @endif</td>
                     <td>{{ $record->grading_cover}}</td>
                     <td>{{ $record->grading_media}}</td>
                     <td>{{ $record->catalog_number}}</td>

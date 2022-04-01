@@ -86,7 +86,7 @@ class LabelController extends Controller
      */
     public function show(Label $label)
     {
-        //Return view to detail artist
+        //Return view to detail label
         $label = Label::find($label->id);
 
         $records = Record::with(['label'])->where('label_id', '=', $label->id)->get();
@@ -150,7 +150,6 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        //Retrieve the employee
         $label = Label::find($label->id);
         $result = Record::where('label_id', '=', $label->id)->first();
         if (!$result) {
@@ -169,4 +168,21 @@ class LabelController extends Controller
             return redirect()->route('labels.index')->with('error', 'Label ' . $label->name . ' could not be deleted. ');
         }
     }
+
+    public function print(Label $label)
+    {
+        //Find the label        
+        // $records = Record::where('label_id', '=' , $label->id)
+        // ->orderBy('artists.name', 'asc')
+        // ->get();
+
+        $records = Record::where('label_id', '=' , $label->id)
+        ->join('artists', 'records.artist_id' , '=' , 'artists.id')
+        ->orderBy('artists.name', 'ASC')
+        ->orderBy('title', 'ASC')->get();
+        
+        $total_value = $records->sum('current_price');
+        return view('labels.print', ['label'=>$label , 'records'=>$records, 'total_value'=>$total_value]);
+    }
+
 }

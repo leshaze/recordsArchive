@@ -1,20 +1,12 @@
 @extends('layout.app')
-@section('title', '- Detail Artist')
+@section('title', '- Print Artist')
 @section('content')
     <div class="container">
         <div class="wrapper">
             <div class="card">
-                <div class="card-header">{{ $artist->name }} <a
-                        href="{{ route('artists.edit', ['artist' => $artist->id]) }}" class="btn btn-sm"><i
-                            class="bi bi-pencil-square"></i></a>
-                    <a href="javascript:document.getElementById('delete-artist-form').submit();" class="btn btn-sm"><i
-                            class="bi bi-trash" onclick="return confirm('Delete {{ $artist->name }}?')"></i></a>
-                    <form id="delete-artist-form" action="{{ route('artists.destroy', ['artist' => $artist->id]) }}"
-                        method="post" style="display: none;">
-                        @method('DELETE')
-                        {{ csrf_field() }}
-                    </form>
+                <div class="card-header justify-content-between align-items-center d-flex">{{ $artist->name }}
                     </td>
+                    <div><a class="btn btn-info btn-sm" href="{{ route('artists.print', ['artist' => $artist->id]) }}") ">Export</a></div>
                 </div>
                         {{-- @foreach ($images as $image)
                                 <img src="{{ URL::asset('storage/' . $image->path) }}" width="100px" height="100px"
@@ -37,7 +29,8 @@
                             <td><a
                                     href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a>
                             </td>
-                            <td>{{ $record->label->name }}</td>
+                            <td><a
+                                href="{{ route('labels.show', ['label' => $record->label_id]) }}">{{ $record->label->name }}</a></td>
                             <td>{{ $record->grading_cover }}</td>
                             <td>{{ $record->grading_media }}</td>
                             <td>{{ $record->catalog_number }}</td>
