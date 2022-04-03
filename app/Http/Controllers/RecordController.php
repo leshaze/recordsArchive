@@ -38,7 +38,7 @@ class RecordController extends Controller
         if (AUTH::user()->role_id == 1) {
             $records = Record::paginate(10);
         } else {
-            $records = Record::where('user_id', '=', AUTH::user()->id)->paginate(10);
+            $records = Record::where('user_id', '=', AUTH::user()->id)->paginate(20);
         }
 
         //dd($records);

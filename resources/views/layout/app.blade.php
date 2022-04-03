@@ -87,7 +87,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#"
                                         onclick="event.preventDefault();
-                                                                                         document.getElementById('logout-form').submit();">
+                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -165,8 +165,8 @@
             //         function(data) {
             //             var array = $.map(data, function(row) {
             //                 return {
-            //                     label: row.name,
-            //                     record_id: row.id
+            //                     title: row.name,
+            //                     id: row.id
             //                 }
             //             })
             //             response($.ui.autocomplete.filter(array, request.term));

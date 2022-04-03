@@ -26,19 +26,18 @@ use App\Http\Controllers\Auth\RegisterController;
 
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/records/api/',[SearchController::class, 'getAutocomplete'])->name('autocomplete');
-Route::get('/record/{id}/delete',[RecordController::class, 'destroy'])->name('record.destroy');
-Route::get('/labels/{label}/print',[LabelController::class, 'print'])->name('labels.print');
-Route::get('/artists/{artist}/print',[ArtistController::class, 'print'])->name('artists.print');
-
+Route::get('/records/api/',[SearchController::class, 'getAutocomplete'])->name('autocomplete')->middleware('auth');
+Route::get('/record/{id}/delete',[RecordController::class, 'destroy'])->name('record.destroy')->middleware('auth');
+Route::get('/labels/{label}/print',[LabelController::class, 'print'])->name('labels.print')->middleware('auth');
+Route::get('/artists/{artist}/print',[ArtistController::class, 'print'])->name('artists.print')->middleware('auth');
 
 Route::resource('dashboard', DashboardController::class);
-Route::resource('artists', ArtistController::class);
-Route::resource('records', RecordController::class);
+Route::resource('artists', ArtistController::class)->middleware('auth');
+Route::resource('records', RecordController::class)->middleware('auth');
 Route::resource('login', LoginController::class);
-Route::resource('logout', LogoutController::class);
-Route::resource('labels', LabelController::class);
-Route::resource('images', ImageController::class);
-//Route::resource('register', RegisterController::class);
+Route::resource('logout', LogoutController::class)->middleware('auth');
+Route::resource('labels', LabelController::class)->middleware('auth');
+Route::resource('images', ImageController::class)->middleware('auth');
+#Route::resource('register', RegisterController::class);
 
 // Route::get('/record/search','RecordController@Search'); 

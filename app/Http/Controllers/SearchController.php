@@ -42,14 +42,29 @@ class SearchController extends Controller
 
         // if ($request->search == 'main') {
         //     $term = $request->term;
+        //     //error_log($term);
         //     if ($term) {
-        //         error_log($term);
-        //         return Artist::where('name', 'like', '%' . $term . '%')
-        //         ->orderBy('release_date', 'ASC')
-        //         ->get();
+                
+        //         $records = Record::join('artists', 'records.artist_id', '=', 'artists.id')
+        //             ->select('records.*')
+        //             ->where('artists.name', 'like', '%' . $request->input('term') . '%')
+        //             ->orderBy('release_date', 'ASC')
+        //             ->get();
+        //             error_log($records);
+        //             return $records;
                 
         //     }
         // }
-    }
 
+        // public function Search(Request $request) {
+        //     $records = Record::join('artists', 'records.artist_id' , '=' , 'artists.id')
+        //     ->select('records.*')
+        //     ->where('artists.name', 'like', '%'.$request->input('term').'%')
+        //     ->orderBy('release_date', 'ASC')
+        //     ->get();
+        //     //dd($records);
+        //     return view('record.search',['term'=>$request->input('term'), 'records'=>$records]); 
+        // }
+
+    }
 }

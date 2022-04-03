@@ -27,7 +27,7 @@ class ArtistController extends Controller
     public function index()
     {
         //Show all artists from the database and return to view
-        $artists = Artist::paginate(10);
+        $artists = Artist::paginate(20);
         return view('artists.index', ['artists' => $artists]);
     }
 

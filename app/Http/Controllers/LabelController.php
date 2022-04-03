@@ -18,7 +18,7 @@ class LabelController extends Controller
     public function index()
     {
         //Show all artists from the database and return to view
-        $labels = Label::paginate(10);
+        $labels = Label::paginate(20);
         return view('labels.index', ['labels' => $labels]);
     }
 
