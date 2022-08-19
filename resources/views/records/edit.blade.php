@@ -183,12 +183,22 @@
                     </p>
                     <p>
                         <label for="current_price">Aktueller Preis €</label>
+                        @error('current_price')
+                        <span class="text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
                         <input type="text" name="current_price" id="current_price" class="form-control"
                             placeholder="Aktueller Preis €" autofocus="" value="{{ $record->current_price }}">
                         <input type="hidden">
                     </p>
                     <p>
                         <label for="buy_price">Kaufpreis €</label>
+                        @error('buy_price')
+                        <span class="text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
                         <input type="text" name="buy_price" id="buy_price" class="form-control" placeholder="Kaufpreis €"
                             autofocus="" value="{{ $record->buy_price }}">
                         <input type="hidden">

@@ -53,7 +53,9 @@ class RecordController extends Controller
             'artist_name' => 'required',
             'title' => 'required',
             'label_name' => 'required',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'buy_price' => 'numeric',
+            'current_price' => 'numeric'
         ]);
         //Persist the record in the database
         //form data is available in the request object
@@ -175,11 +177,12 @@ class RecordController extends Controller
                 ->where('reference_id', '=', $record->id)
                 ->get();
         }
+        $prices = PriceHistory::where('record_id', '=', $record->id)->get();
 
         if (empty($record)) {
             return redirect()->route('records.index')->with('error', 'Invalid record');
         } else {
-            return view('records.details', ['record' => $record, 'images' => $images]);
+            return view('records.details', ['record' => $record, 'images' => $images, 'prices' => $prices]);
         }
     }
 
@@ -217,6 +220,8 @@ class RecordController extends Controller
             'artist_name' => 'required',
             'title' => 'required',
             'label_name' => 'required',
+            'buy_price' => 'numeric',
+            'current_price' => 'numeric'
         ]);
 
         // Ermitteln ob Artist vorhanden ist oder geändert worden ist

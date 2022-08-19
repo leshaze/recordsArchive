@@ -24,16 +24,31 @@
                             alt="{{ $image->name }}">
                     @endforeach
                 </div> --}}
-                <ul>
+                <table class="table small xs">
+                    <tr>
+                        <th>Kind</th>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Cover</th>
+                        <th>Media</th>
+                        <th>Katalog-Nr.</th>
+                        <th>Aktueller Preis</th>
+                    </tr>
                     @foreach ($records as $record)
-                        <li>
-                            Record: <a
-                                href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a> -
-                            Artist: <a
-                                href="{{ route('artists.show', ['artist' => $record->artist->id]) }}">{{ $record->artist->name }}</a>
-                        </li>
+                        <tr>
+                            <td>{{ $record->kind }}</td>
+                            <td><a href="{{ route('records.show', ['record' => $record->id]) }}">{{ $record->title }}</a>
+                            </td>
+                            <td><a
+                                    href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">{{ $record->artist->name }}</a>
+                            </td>
+                            <td>{{ $record->grading_cover }}</td>
+                            <td>{{ $record->grading_media }}</td>
+                            <td>{{ $record->catalog_number }}</td>
+                            <td>{{ $record->current_price }} €</td>
+                        </tr>
                     @endforeach
-                </ul>
+                </table>
             </div>
 
         </div>

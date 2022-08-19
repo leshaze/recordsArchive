@@ -4,7 +4,7 @@
     <div class="container">
         <div class="wrapper">
             <div class="card">
-                <div class="card-header">{{ $record->title }} - {{ $record->kind }} <a
+                <div class="card-header">{{ $record->title }} <a
                         href="{{ route('records.edit', ['record' => $record->id]) }}" class="btn btn-sm"><i
                             class="bi bi-pencil-square"></i></a> <a
                         href="javascript:document.getElementById('delete-record-form').submit();" class="btn btn-sm"><i
@@ -15,6 +15,70 @@
                         {{ csrf_field() }}
                     </form>
                 </div>
+                <div class="Record">
+                    <p>
+                        <input class="form-check-input" type="radio" name="kind" id="Radios1" value="LP"
+                            @if ($record->kind == 'LP') checked @endif>
+                        <label class="form-check-label" for="Radios1">
+                            LP
+                        </label><br>
+                        <input class="form-check-input" type="radio" name="kind" id="Radios2" value="CD"
+                            @if ($record->kind == 'CD') checked @endif>
+                        <label class="form-check-label" for="Radios2">
+                            CD
+                        </label>
+                    </p>
+                    <p>
+                        @if ($record->sold) <input class="form-check-input" type="checkbox" id="sold" name="sold"
+                            checked>
+                        <label for="sold">Verkauft</label><br>@endif
+                        @if ($record->lost) <input class="form-check-input" type="checkbox" id="lost" name="lost"
+                             checked>
+                        <label for="lost">Verloren</label><br>@endif
+                    </p>
+
+                    <p></p>
+                    <p>
+                        <label for="title">Künstler</label>
+                        @error('artist_name')
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <br><a href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">
+                            {{ $record->artist->name }}</a>
+                    </p>
+                    <p>
+                        <label for="title">Titel</label>
+                        @error('title')
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <br><a href="{{ route('records.show', ['record' => $record->id]) }}">
+                            {{ $record->title }}</a>
+                    </p>
+                    <p>
+                        <label for="label_name">Label</label>
+                        @error('label_name')
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                        <br><a href="{{ route('labels.show', ['label' => $record->label_id]) }}">
+                            {{ $record->label->name}}</a>
+
+                    </p>
+                    <p>
+                        <label for="current_price">Aktueller Preis</label>
+                        {{ $record->current_price}} € <br><br>
+                        <label for="price_history">Preisentwicklung</label><br>
+                        @foreach ($prices as $price)
+                            {{ date('d.m.Y', strtotime($price->created_at));  }} - {{ $price->price}} € <br>
+                        @endforeach
+                    </p>
+                </div>
+                
                 {{-- <ul>
                     @foreach ($images as $image)
                         <li>
@@ -31,14 +95,6 @@
                         </li>
                     @endforeach
                 </ul> --}}
-                
-                    <ul>
-                        <li><a href="{{ route('artists.show', ['artist' => $record->artist_id]) }}">
-                                {{ $record->artist->name }}</a></li>
-                        <li><a
-                                href="{{ route('labels.show', ['label' => $record->label_id]) }}">{{ $record->label->name }}</a>
-                        </li>
-                    </ul>
             </div>
         </div>
     </div>
