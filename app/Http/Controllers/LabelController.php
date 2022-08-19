@@ -90,12 +90,12 @@ class LabelController extends Controller
         $label = Label::find($label->id);
 
         $records = Record::with(['label'])->where('label_id', '=', $label->id)->get();
-
+        $total_value = Record::where('label_id', '=', $label->id)->sum('current_price');
         $images = Image::where('reference', '=', 'label')
             ->where('reference_id', '=', $label->id)
             ->get();
         //dd($records);
-        return view('labels.details', ['label' => $label, 'records' => $records, 'images' => $images]);
+        return view('labels.details', ['label' => $label, 'records' => $records, 'images' => $images, 'total_value' => $total_value]);
     }
 
     /**

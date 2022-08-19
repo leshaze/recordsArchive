@@ -5,7 +5,7 @@
         <div class="wrapper">
             <div class="card">
                 <div class="card-header justify-content-between align-items-center d-flex">
-                    <div> {{ $label->name }} <a
+                    <div> {{ $label->name }} - {{ $total_value}} €<a
                         href="{{ route('labels.edit', ['label' => $label->id]) }}" class="btn btn-sm"><i
                             class="bi bi-pencil-square"></i></a>
                             <a href="javascript:document.getElementById('delete-label-form').submit();"

@@ -88,14 +88,14 @@ class ArtistController extends Controller
     {
         //Return view to detail artist
         $artist = Artist::find($artist->id);
-
+        $total_value = Record::where('artist_id', '=', $artist->id)->sum('current_price');
         $records = Record::with(['artist'])->where('artist_id', '=', $artist->id)->get();
 
         $images = Image::where('reference', '=', 'artist')
             ->where('reference_id', '=', $artist->id)
             ->get();
         //dd($records);
-        return view('artists.details', ['artist' => $artist, 'records' => $records, 'images' => $images]);
+        return view('artists.details', ['artist' => $artist, 'records' => $records, 'images' => $images, 'total_value' => $total_value]);
     }
 
     /**

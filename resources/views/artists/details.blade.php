@@ -5,7 +5,7 @@
         <div class="wrapper">
             <div class="card">
                 <div class="card-header justify-content-between align-items-center d-flex">
-                    <div> {{ $artist->name }} <a href="{{ route('artists.edit', ['artist' => $artist->id]) }}"
+                    <div> {{ $artist->name }} - {{ $total_value }} €<a href="{{ route('artists.edit', ['artist' => $artist->id]) }}"
                             class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
                         <a href="javascript:document.getElementById('delete-artist-form').submit();" class="btn btn-sm"
                             onclick="return confirm('Delete {{ $artist->name }}?')"><i class="bi bi-trash"></i></a>
