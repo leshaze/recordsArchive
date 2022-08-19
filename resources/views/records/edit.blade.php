@@ -188,10 +188,17 @@
                             {{ $message }}
                         </span>
                     @enderror
-                        <input type="text" name="current_price" id="current_price" class="form-control"
+                        <input type="text" name="current_price" id="current_price" class="form-control @error('current_price') border border-danger @enderror"
                             placeholder="Aktueller Preis €" autofocus="" value="{{ $record->current_price }}">
                         <input type="hidden">
                     </p>
+                    <p>
+                        <label for="platform">Anbieter</label>
+                        <input type="text" name="platform" id="platform" class="form-control"
+                            placeholder="Anbieter" autofocus="" value="@if ($record->platform) {{ $record->platform->name }} @endif">
+                        <input type="hidden" name="platform_id" id="platform_id" value="{{ $record->platform_id }}">
+                    </p>
+                    <p></p>
                     <p>
                         <label for="buy_price">Kaufpreis €</label>
                         @error('buy_price')
@@ -199,14 +206,14 @@
                             {{ $message }}
                         </span>
                     @enderror
-                        <input type="text" name="buy_price" id="buy_price" class="form-control" placeholder="Kaufpreis €"
+                        <input type="text" name="buy_price" id="buy_price" class="form-control @error('buy_price') border border-danger @enderror" placeholder="Kaufpreis €"
                             autofocus="" value="{{ $record->buy_price }}">
                         <input type="hidden">
                     </p>
                     <p>
                         <label for="sold_date" id="sold_date_label"
                             @if (!$record->sold) style="display: none" @endif>Verkaufsdatum</label>
-                        <input type="text" name="sold_date" id="sold_date" class="form-control"
+                        <input type="text" name="sold_date" id="sold_date" class="form-control "
                             placeholder="Verkaufsdatum" autofocus=""
                             @if (!$record->sold) style="display: none" @endif
                             value="{{ $record->sold_date }}">

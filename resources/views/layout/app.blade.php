@@ -52,6 +52,9 @@
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ route('labels.index') }}" class="dropdown-item">All Label</a>
                                     <a href="{{ route('labels.create') }}" class="dropdown-item">Add new Label</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ route('platforms.index') }}" class="dropdown-item">All Platforms</a>
+                                    <a href="{{ route('platforms.create') }}" class="dropdown-item">Add new Platform</a>
                                 </div>
                             </li>
                         </ul>
@@ -291,6 +294,31 @@
                 change: function(event, ui) {
                     if (ui.item == null) {
                         $('#country_id').val("")
+                    }
+                }
+            });
+
+            $('#platform').autocomplete({
+                source: function(request, response) {
+                    $.getJSON('{{ route('autocomplete') }}' + '/?search=platform&term=' + request.term,
+                        function(data) {
+                            var array = $.map(data, function(row) {
+                                return {
+                                    label: row.name,
+                                    label_id: row.id
+                                }
+                            })
+                            response($.ui.autocomplete.filter(array, request.term));
+                        })
+                },
+                minLength: 1,
+                delay: 200,
+                select: function(event, ui) {
+                    $('#platform_id').val(ui.item.label_id)
+                },
+                change: function(event, ui) {
+                    if (ui.item == null) {
+                        $('#platform_id').val("")
                     }
                 }
             });

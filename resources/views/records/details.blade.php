@@ -74,7 +74,7 @@
                         {{ $record->current_price}} € <br><br>
                         <label for="price_history">Preisentwicklung</label><br>
                         @foreach ($prices as $price)
-                            {{ date('d.m.Y', strtotime($price->created_at));  }} - {{ $price->price}} € <br>
+                            {{ date('d.m.Y', strtotime($price->created_at));  }} - {{ $price->price}} €  @if ($price->platform) - {{ $price->platform->name}} @endif<br>
                         @endforeach
                     </p>
                 </div>

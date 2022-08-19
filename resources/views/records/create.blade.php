@@ -153,16 +153,32 @@
                     </p>
                     <p>
                         <label for="current_price">Aktueller Preis €</label>
-                        <input type="text" name="current_price" id="current_price" class="form-control"
+                        @error('current_price')
+                        <span class="text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                        <input type="text" name="current_price" id="current_price" class="form-control @error('current_price') border border-danger @enderror"
                             placeholder="Aktueller Preis €" autofocus="" value="{{ old('current_price') }}">
                         <input type="hidden">
                     </p>
+                    <p>
+                        <label for="platform">Anbieter</label>
+                        @error('platform')
+                        <span class="text-danger">
+                            {{ $message }}
+                        </span>
+                    @enderror
+                        <input type="text" name="platform" id="platform" class="form-control @error('platform') border border-danger @enderror"
+                            placeholder="Anbieter" autofocus="" value="{{ old('platform') }}">
+                        <input type="hidden" name="platform_id" id="platform_id" value="{{ old('platform_id') }}">
+                    </p>
+                    <p></p>
                     <p>
                         <label for="buy_price">Kaufpreis €</label>
                         <input type="text" name="buy_price" id="buy_price" class="form-control" placeholder="Kaufpreis €"
                             autofocus="" value="{{ old('buy_price') }}">
                         <input type="hidden">
-
                     </p>
 
                     <p class="full-width">

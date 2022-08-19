@@ -30,4 +30,9 @@ class Record extends Model
     {
         return $this->hasMany(PriceHistory::class);
     }
+    
+    public function platform()
+    {
+        return $this->belongsTo(Platform::class);
+    }
 }

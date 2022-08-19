@@ -7,6 +7,7 @@ use App\Models\Label;
 use App\Models\Artist;
 use App\Models\Record;
 use App\Models\Country;
+use App\Models\Platform;
 use App\Models\PriceHistory;
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
@@ -54,8 +55,8 @@ class RecordController extends Controller
             'title' => 'required',
             'label_name' => 'required',
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'buy_price' => 'numeric',
-            'current_price' => 'numeric'
+            'buy_price' => 'nullable|numeric',
+            'current_price' => 'nullable|numeric'
         ]);
         //Persist the record in the database
         //form data is available in the request object
@@ -129,6 +130,20 @@ class RecordController extends Controller
         $record->archive_number = $request->input('archive_number');
         $record->note           = $request->input('note');
 
+        // Check if platform is filled
+        if (!empty($request->input('platform'))) {
+            // Check if platform_id is in the current input request
+            if (empty($request->input('platform_id'))) {
+                // If not, try to get it from the database.
+                //dd($request->input());
+                $get_platform_id = Platform::firstorCreate([
+                    'name' => $request->input('platform')
+                ]);
+                $record->platform_id = $get_platform_id->id;
+            } else {
+                $record->platform_id = $request->input('platform_id');
+            }
+        }
         $record->save(); //persist the data
 
         //save the image 
@@ -152,7 +167,9 @@ class RecordController extends Controller
             $pricehistory = new PriceHistory();
             $pricehistory->price = $checked_currentPrice;
             $pricehistory->record_id = $record->id;
-            //$pricehistory->platform_id = '99';
+            if($record->platform_id) {
+                $pricehistory->platform_id = $record->platform_id;
+            }
             $pricehistory->save();
 
             //dd($pricehistory);
@@ -178,7 +195,7 @@ class RecordController extends Controller
                 ->get();
         }
         $prices = PriceHistory::where('record_id', '=', $record->id)->get();
-
+     
         if (empty($record)) {
             return redirect()->route('records.index')->with('error', 'Invalid record');
         } else {
@@ -220,8 +237,8 @@ class RecordController extends Controller
             'artist_name' => 'required',
             'title' => 'required',
             'label_name' => 'required',
-            'buy_price' => 'numeric',
-            'current_price' => 'numeric'
+            'buy_price' => 'nullable|numeric',
+            'current_price' => 'nullable|numeric'
         ]);
 
         // Ermitteln ob Artist vorhanden ist oder geändert worden ist
@@ -251,17 +268,25 @@ class RecordController extends Controller
             $record->country_id = $get_country_id->id;
         }
 
+        // Check if platform is filled
+        if ($request->platform) {
+            // If not, try to get it from the database.
+            $get_platform_id = Platform::firstOrCreate([
+                'name' => $request->platform
+            ]);
+            $record->platform_id = $get_platform_id->id;
+        }
         $record->release_date   = $request->release_date;
         $record->reissue_date   = $request->reissue_date;
 
         if (is_numeric($request->grading_media)) $record->grading_media = $request->grading_media;
         if (is_numeric($request->grading_cover)) $record->grading_cover  = $request->grading_cover;
-        if($record->current_price != $request->current_price) {
+        if ($record->current_price != $request->current_price) {
             //Save pricehistory
             $pricehistory = new PriceHistory();
             $pricehistory->price = str_replace(',', '.', $request->current_price);
             $pricehistory->record_id = $record->id;
-            //$pricehistory->platform_id = '99';
+            $pricehistory->platform_id = $record->platform_id;
             $pricehistory->save();
         }
         $record->current_price  = ($request->current_price) ? str_replace(',', '.', $request->current_price) : $record->current_price = null;

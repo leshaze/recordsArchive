@@ -11,8 +11,13 @@ class PriceHistory extends Model
 
     protected $table = "price_history";
 
-    public function price()
+    // public function price()
+    // {
+    //     return $this->belongsTo(Record::class);
+    // }
+
+    public function platform()
     {
-        return $this->belongsTo(Record::class);
+        return $this->belongsTo(Platform::class);
     }
 }

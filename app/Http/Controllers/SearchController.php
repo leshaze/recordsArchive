@@ -6,6 +6,7 @@ use App\Models\Label;
 use App\Models\Artist;
 use App\Models\Record;
 use App\Models\Country;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -37,6 +38,12 @@ class SearchController extends Controller
         if ($request->search == 'country') {
             if ($term) {
                 return Country::where('name', 'like', '%' . $term . '%')->get();
+            }
+        }
+
+        if ($request->search == 'platform') {
+            if ($term) {
+                return Platform::where('name', 'like', '%' . $term . '%')->get();
             }
         }
 

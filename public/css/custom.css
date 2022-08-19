@@ -19,6 +19,13 @@
     padding: 1em 1em 1em 1em;
 }
 
+.Platform{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    grid-gap: 10px;
+    padding: 1em 1em 1em 1em;
+}
+
 .full-width{
     grid-column: 1 / 4; 
 }
