@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('price');
-            $table->integer('platform_id');
+            $table->integer('platform_id')->nullable();
             $table->integer('record_id');
         });
     }

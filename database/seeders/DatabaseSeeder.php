@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ArtistSeeder::class,
             CountrySeeder::class,
             LabelSeeder::class,
+            PlatformSeeder::class,
             RecordSeeder::class,
         ]);
     }

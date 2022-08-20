@@ -131,15 +131,17 @@ class RecordController extends Controller
         $record->note           = $request->input('note');
 
         // Check if platform is filled
+        //dd($request);
         if (!empty($request->input('platform'))) {
             // Check if platform_id is in the current input request
             if (empty($request->input('platform_id'))) {
                 // If not, try to get it from the database.
                 //dd($request->input());
-                $get_platform_id = Platform::firstorCreate([
+                $get_platform = Platform::firstorCreate([
                     'name' => $request->input('platform')
                 ]);
-                $record->platform_id = $get_platform_id->id;
+                dd($get_platform);
+                $record->platform_id = $get_platform->id;
             } else {
                 $record->platform_id = $request->input('platform_id');
             }
