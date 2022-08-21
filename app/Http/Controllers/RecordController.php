@@ -140,7 +140,7 @@ class RecordController extends Controller
                 $get_platform = Platform::firstorCreate([
                     'name' => $request->input('platform')
                 ]);
-                dd($get_platform);
+                //dd($get_platform);
                 $record->platform_id = $get_platform->id;
             } else {
                 $record->platform_id = $request->input('platform_id');
