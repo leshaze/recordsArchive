@@ -156,20 +156,22 @@
             });
 
 
-            $('a[name="image_delete"]').click(function() {
-                console.log($.name);
-            });
+            // $('a[name="image_delete"]').click(function() {
+            //     console.log($.name);
+            // });
 
             // $('#search').autocomplete({
             //     source: function(request, response) {
-            //         $.getJSON('{{ route('autocomplete') }}' + '/?search=main&term='+ request.term, 
+            //         $.getJSON('{{ route('autocomplete') }}' + '/?search=all&term='+ request.term, 
             //         function(data) {
+            //             //console.log(data);
             //             var array = $.map(data, function(row) {
-            //                 return {
-            //                     title: row.name,
-            //                     id: row.id
-            //                 }
-            //             })
+            //                             return {
+            //                             label: row[0].title || row[1].name | row[2].name,
+            //                             value: row.title
+            //                         }
+                                    
+            //             });console.log(array);
             //             response($.ui.autocomplete.filter(array, request.term));
             //         })
             //     },
@@ -235,15 +237,13 @@
             $('#title').autocomplete({
                 source: function(request, response) {
                     $.getJSON('{{ route('autocomplete') }}' + '/?search=title&term=' + request.term +
-                        '_' + document.getElementById(
-                            'artist_id').value,
+                        '_' + document.getElementById('artist_id').value,
                         function(data) {
 
                             var array = $.map(data, function(row) {
                                 if (row.archive_number) {
                                     return {
-                                        label: row.title + ' - Archiv.Nr.:' + row
-                                            .archive_number,
+                                        label: row.title + ' - Archiv.Nr.:' + row.archive_number,
                                         value: row.title
                                     }
                                 } else {

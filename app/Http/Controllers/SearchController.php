@@ -22,7 +22,7 @@ class SearchController extends Controller
         }
         if ($request->search == 'label') {
             if ($term) {
-                return Label::where('name', 'like', '%' . $request->input('term') . '%')->get();
+                return Label::where('name', 'like', '%' . $term . '%')->get();
             }
         }
 
@@ -47,18 +47,17 @@ class SearchController extends Controller
             }
         }
 
-        // if ($request->search == 'main') {
-        //     $term = $request->term;
-        //     //error_log($term);
+        // if ($request->search == 'all') {
+        //     //error_log($request->input('term'));
         //     if ($term) {
-                
-        //         $records = Record::join('artists', 'records.artist_id', '=', 'artists.id')
-        //             ->select('records.*')
-        //             ->where('artists.name', 'like', '%' . $request->input('term') . '%')
-        //             ->orderBy('release_date', 'ASC')
-        //             ->get();
-        //             error_log($records);
-        //             return $records;
+        //         $records = Record::where('title', 'like', '%' . $term . '%')->get();
+        //         $artists = Artist::where('name', 'like', '%' . $term . '%')->get();
+        //         $labels = Label::where('name' , 'like', '%' . $term . '%')->get();
+        //             // ->select('records.*')
+        //             // ->where('artists.name', 'like', '%' . $request->input('term') . '%')
+        //             // ->orderBy('release_date', 'ASC')
+        //         error_log($records);
+        //         return [$records, $artists, $labels];
                 
         //     }
         // }
