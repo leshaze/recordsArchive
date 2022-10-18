@@ -8,6 +8,7 @@ use App\Models\Record;
 use App\Models\Country;
 use App\Models\Platform;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -47,20 +48,42 @@ class SearchController extends Controller
             }
         }
 
-        // if ($request->search == 'all') {
-        //     //error_log($request->input('term'));
-        //     if ($term) {
-        //         $records = Record::where('title', 'like', '%' . $term . '%')->get();
-        //         $artists = Artist::where('name', 'like', '%' . $term . '%')->get();
-        //         $labels = Label::where('name' , 'like', '%' . $term . '%')->get();
-        //             // ->select('records.*')
-        //             // ->where('artists.name', 'like', '%' . $request->input('term') . '%')
-        //             // ->orderBy('release_date', 'ASC')
-        //         error_log($records);
-        //         return [$records, $artists, $labels];
+        if ($request->search == 'all') {
+            error_log($request->input('term'));
+            if ($term) {
+                // $records = Record::where('title', 'like', '%' . $term . '%')
+                // ->with('artist')
+                // ->select('id', 'artist_id', DB::raw('title as name'), DB::raw('"record" as type'))
+                // ->get();
+                //$artists = Artist::where('name', 'like', '%' . $term . '%');
+
+            //dd($records);
                 
-        //     }
-        // }
+                
+                $records = Record::query()
+                    ->select('id', DB::raw('title as name'), 
+                    DB::raw('"record" as type'))
+                    ->where('title', 'like', '%' . $term . '%');
+                $labels = Label::query()
+                    ->select('id', 'name', DB::raw('"label" as type'))
+                    ->where('name', 'like', '%' . $term .'%');    
+                $query = Artist::query()
+                    ->select('id', 'name', DB::raw('"artist" as type'))
+                    ->where('name','like', '%' . $term . '%')
+                    ->union($records)
+                    ->union($labels)
+                    ->get();
+                error_log($query);
+
+                
+                // $labels = Label::where('name' , 'like', '%' . $term . '%')->get()
+                //     ->select('records.*')
+                //     ->where('artists.name', 'like', '%' . $request->input('term') . '%')
+                //     ->orderBy('release_date', 'ASC');
+                return $query;
+                
+            }
+        }
 
         // public function Search(Request $request) {
         //     $records = Record::join('artists', 'records.artist_id' , '=' , 'artists.id')

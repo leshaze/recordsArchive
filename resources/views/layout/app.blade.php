@@ -76,9 +76,9 @@
                                 </li>
                             @endif --}}
                             <!--  Searchbar -->
-                            {{-- <li>
+                            <li>
                                 <input class="form-control" type="text" id="search" placeholder="Search">
-                            </li> --}}
+                            </li>
                             {{-- 
                                 <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -160,28 +160,38 @@
             //     console.log($.name);
             // });
 
-            // $('#search').autocomplete({
-            //     source: function(request, response) {
-            //         $.getJSON('{{ route('autocomplete') }}' + '/?search=all&term='+ request.term, 
-            //         function(data) {
-            //             //console.log(data);
-            //             var array = $.map(data, function(row) {
-            //                             return {
-            //                             label: row[0].title || row[1].name | row[2].name,
-            //                             value: row.title
-            //                         }
+            $('#search').autocomplete({
+                source: function(request, response) {
+                    $.getJSON('{{ route('autocomplete') }}' + '/?search=all&term='+ request.term, 
+                    function(data) {
+                        var array = $.map(data, function(row) {
+                                        return {
+                                        //label: row[0].title || row[1].name | row[2].name,
+                                        //label: row.name + ' - ' + row.artist.name,
+                                        label: row.name,
+                                        type: row.type,
+                                        id: row.id
+                                    }
                                     
-            //             });console.log(array);
-            //             response($.ui.autocomplete.filter(array, request.term));
-            //         })
-            //     },
-            //     minLength: 1,
-            //     delay: 200,
-            //     select: function(event, ui) {
-            //         //window.location.href = '{{ route('records.edit', ['record' => 'ui.item.record_id']) }}';
-            //         window.location.href = '/record/search?term='+ui.item.label;
-            //     }
-            // });
+                        });
+                        //console.log(array);
+                        response($.ui.autocomplete.filter(array, request.term));
+                    })
+                },
+                minLength: 1,
+                delay: 200,
+                select: function(event, ui) {
+                    if(ui.item.type == "record"){
+                        window.location.href = '/records/'+ui.item.id;
+                    }
+                    if(ui.item.type == "artist"){
+                        window.location.href = '/artists/'+ui.item.id;
+                    }
+                    if(ui.item.type == "label"){
+                        window.location.href = '/labels/'+ui.item.id;
+                    }
+                }
+            });
 
             $('#artist_name').autocomplete({
                 source: function(request, response) {
