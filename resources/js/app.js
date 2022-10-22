@@ -10,7 +10,7 @@ window._ = require('lodash');
 
 window.axios = require('axios');
 window.$ = require('jquery');
-// window.Chart = require('chart.js');
+window.Chart = require('chart.js/dist/chart.js');
 // window.myChart = new Chart(ctx);
 
 

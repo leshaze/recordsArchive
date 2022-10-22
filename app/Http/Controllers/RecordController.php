@@ -196,8 +196,9 @@ class RecordController extends Controller
                 ->where('reference_id', '=', $record->id)
                 ->get();
         }
-        $prices = PriceHistory::where('record_id', '=', $record->id)->get();
-     
+        $prices = PriceHistory::latest()->take(5)->where('record_id', '=', $record->id)->get();
+        $prices = $prices->reverse();
+
         if (empty($record)) {
             return redirect()->route('records.index')->with('error', 'Invalid record');
         } else {
