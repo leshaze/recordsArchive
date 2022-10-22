@@ -43,7 +43,8 @@
                         <div class="p-2" style="width:120px">
                             <p>
                                 <label for="title">Künstler</label>
-                                @error('artist_name')120px
+                                @error('artist_name')
+                                    120px
                                     <span class="text-danger">
                                         {{ $message }}
                                     </span>
@@ -119,10 +120,12 @@
                     </p>
                     <p></p>
                     <p></p>
-                    <p>
-                        <label for="price_history">Preisentwicklung</label><br>
-                        <canvas id="myChart"></canvas>
-                    </p>
+                    @if ($prices->count() >= '2')
+                        <p>
+                            <label for="price_history">Preisentwicklung</label><br>
+                            <canvas id="myChart"></canvas>
+                        </p>
+                    @endif
                     <p><br><br>
                         @foreach ($prices as $price)
                             {{ date('d.m.Y', strtotime($price->created_at)) }} - {{ $price->price }} € @if ($price->platform)
@@ -131,6 +134,9 @@
                             <br>
                         @endforeach
                     </p>
+                    @if ($prices->count() <= '2')
+                        <p></p>
+                    @endif
                     <p></p>
 
                 </div>
