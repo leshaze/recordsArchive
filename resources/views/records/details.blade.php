@@ -122,7 +122,7 @@
                     <p></p>
                     @if ($prices->count() >= '2')
                         <p>
-                            <label for="price_history">Preisentwicklung</label><br>
+                            <label for="price_history">Preisentwicklung in €</label><br>
                             <canvas id="myChart"></canvas>
                         </p>
                     @endif
