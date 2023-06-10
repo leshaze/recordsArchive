@@ -129,7 +129,7 @@
                     <p><br><br>
                         @foreach ($prices as $price)
                             {{ date('d.m.Y', strtotime($price->created_at)) }} - {{ $price->price }} € @if ($price->platform)
-                                - {{ $price->platform->name }}
+                                - <a href="{{ $price->platform->url }}" target="_blank">{{ $price->platform->name }}</a>
                             @endif
                             <br>
                         @endforeach

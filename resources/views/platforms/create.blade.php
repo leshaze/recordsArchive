@@ -15,12 +15,17 @@
                             </span>
                         @enderror
                         <input type="text" name="platform" id="platform"
-                            class="form-control  @error('platform') border border-danger @enderror"
-                            placeholder="Anbieter" autofocus="" value="{{ old('platform') }}">
-                            <input type="hidden" name="platform_id" id="platform_id" value="{{ old('platform_id') }}">
+                            class="form-control  @error('platform') border border-danger @enderror" placeholder="Anbieter"
+                            autofocus="" value="{{ old('platform') }}">
+                        <input type="hidden" name="platform_id" id="platform_id" value="{{ old('platform_id') }}">
                     </p>
                     <p>
                         <label for="url">URL</label>
+                        @error('url')
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
                         <input type="text" name="url" id="url"
                             class="form-control  @error('url') border border-danger @enderror" placeholder="URL"
                             autofocus="" value="{{ old('url') }}">

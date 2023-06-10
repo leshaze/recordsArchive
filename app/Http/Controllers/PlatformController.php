@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Platform;
+use Illuminate\Support\Str;
 use App\Http\Requests\StorePlatformRequest;
 use App\Http\Requests\UpdatePlatformRequest;
-use App\Models\Platform;
 
 class PlatformController extends Controller
 {
@@ -48,10 +49,14 @@ class PlatformController extends Controller
         if ($get_platform) {
             return redirect()->route('platforms.create')->with('error', 'Platform ' . $request->input('platform') . ' is already in the database.');
         }
-        if (!$get_platform) { 
+        if (!$get_platform) {
             $platform = new Platform();
             $platform->name = $request->input('platform');
-            $platform->url = $request->input('url');
+            if (Str::startsWith($request->input('url'), 'https://') || Str::startsWith($request->input('url'), 'http://')) {
+                    $platform->url = $request->input('url');
+            } else {
+                    $platform->url = "https://" . $request->input('url');
+            }
             $platform->save(); //persist the data
             return redirect()->route('platforms.create')->with('info', 'Platform ' . $request->input('platform') . ' added successfully');
         }
